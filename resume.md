@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-### My Resume: Muhammad Ichwan
+### 🔐 My Resume: Muhammad Ichwan 🔐
 
 ### Summary
 Passionate Cyber Security Consultant with a Bachelor's Degree in Computer Engineering at University of Amikom Yogyakarta (2019-2023) and 1 year of professional experience. Specialized in Penetration Testing and Red Teaming, with 3 years of hands-on expertise gained through various Cyber Security Competitions that focus on Web Exploitation.

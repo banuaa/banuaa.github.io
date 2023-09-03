@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-### My Professional Certifications
+### 🔐 My Professional Certifications 🔐
 
 - **✨Certified Ethical Hacker (CEH) Master, EC-Council**\
 Certificate or Evidence: [Here](/files/ECC-CEHMaster-Certificate.pdf)
