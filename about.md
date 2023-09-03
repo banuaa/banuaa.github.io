@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-### 🔐 About Me: Cyber Security Consultant 🔐
+### About Me: Cyber Security Consultant
 👋 Greetings, I'm Muhammad Ichwan, a dedicated Cyber Security Consultant specializing in Penetration Testing and Red Teaming. Armed with a Bachelor's Degree in Computer Engineering from [University of Amikom Yogyakarta](https://www.amikom.ac.id) (2019-2023). My journey began with 3 years of hands-on experience in Capture the Flag challenges, Hack The Box, and similar activities, honing my skills in a virtual battleground.
 
 💼 Professional Experience: With 1 year of professional work experience, I've transitioned my knowledge into real-world cybersecurity challenges.
