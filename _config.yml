@@ -1,8 +1,8 @@
 # Site settings
 title: Muhammad Ichwan
 description: "👋 Hello, I'm Muhammad Ichwan, a dedicated Cyber Security Consultant specializing in Penetration Testing and Red Teaming."
-url: 'http://banua.github.io/banua.github.io'
-baseurl: '/banua.github.io'
+url: '/'
+baseurl: '/'
 # google_analytics: 'UA-XXXXXX-X'
 # disqus_shortname: 'your-disqus-name'
 # disable_landing_page: true
