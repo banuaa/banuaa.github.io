@@ -1,0 +1,46 @@
+# Site settings
+title: Muhammad Ichwan
+description: "👋 Hello, I'm Muhammad Ichwan, a dedicated Cyber Security Consultant specializing in Penetration Testing and Red Teaming."
+url: ''
+baseurl: ''
+# google_analytics: 'UA-XXXXXX-X'
+# disqus_shortname: 'your-disqus-name'
+# disable_landing_page: true
+
+author:
+  name: 'Muhammad Ichwan'
+  email: michwan184@gmail.com
+  twitter_username: banuaa_
+  facebook_username: muhammad.ichwan.35325
+  github_username:  banuaa
+  linkedin_username:  muhammad-ichwan-banua
+  medium_username: banua
+
+defaults:
+  -
+    scope:
+      path: ''
+      type: 'posts'
+    values:
+        layout: 'post'
+
+# Build settings
+destination: _site
+paginate: 10
+permalink: /:year/:title/
+markdown: kramdown
+highlighter: rouge
+excerpt_separator: <!--more-->
+
+sass:
+    sass_dir: _sass
+    style: compressed
+
+kramdown:
+  # use Github Flavored Markdown
+  input: GFM
+  # do not replace newlines by <br>s
+  hard_wrap: false
+
+plugins: ['jekyll-paginate']
+exclude: ['README.md', 'Gemfile', 'Gemfile.lock', 'screenshot.png']
