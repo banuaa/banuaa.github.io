@@ -45,6 +45,7 @@ Passionate Cyber Security Consultant with a Bachelor's Degree in Computer Engine
 **More Achievements: [Here](/achievements)**
 
 ### Certifications
+- Web Application Penetration Tester eXtreme (eWPTXv2), eLearnSecurity
 - Certified Ethical Hacker (CEH) Master, EC-Council
 - Certified Ethical Hacker (CEH) ANSI, EC-Council
 - Certified Ethical Hacker (CEH) Practical, EC-Council
