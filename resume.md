@@ -16,7 +16,7 @@ Passionate Cyber Security Consultant with a Bachelor's Degree in Computer Engine
 ### Professional Experience
 - **Cyber Security Consultant**
 - PT Defender Nusa Semesta (Defenxor), South Jakarta
-- 2022 - Present
+- August 2022 - Present
 - Responsibilities:
     - Conducted penetration tests to identify and remediate vulnerabilities in client applications (web, mobile, desktop), network, and infrastructure.
     - Collaborated with teams to develop and execute red teaming exercises.
