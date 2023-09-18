@@ -52,7 +52,7 @@ Here is the output after decompiling the PCK file:
 All the source code are inside the "Scripts" directory:
 ![Scripts](/images/post/CSAWCTF2023_scripts.png)
 
-Let's move to the Godot Engine to analyze the Source Code within the "Scripts" directory.
+Let's move to the [Godot Engine Editor](https://godotengine.org/download/windows/) to analyze the Source Code within the "Scripts" directory.
 
 **Analysis:**\
 Here is the initial view using the Godot Engine for debugging and analyzing the source code of the PCK file.
