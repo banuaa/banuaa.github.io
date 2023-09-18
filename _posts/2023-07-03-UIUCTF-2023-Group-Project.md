@@ -150,8 +150,9 @@ We got the flag!
 ![Flag](/images/post/UIUCTF2023_flag.png)
 
 Thank you for reading this article, i hope it was helpful :-D\
-**Follow me on: [Medium], [Github], [Youtube], [Instagram]**
+**Follow me on: [Linkedin], [Medium], [Github], [Youtube], [Instagram]**
 
+[Linkedin]: https://www.linkedin.com/in/muhammad-ichwan-banua/
 [Medium]: https://banua.medium.com
 [Github]: https://github.com/banuaa
 [Youtube]: https://www.youtube.com/@muhammad.iwn-banua
