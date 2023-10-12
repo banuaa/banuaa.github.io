@@ -4,7 +4,7 @@ date:   2023-10-09 00:00:00
 categories: [Web]
 tags: [Web]
 ---
-Last week, i participated in BlackHat MEA CTF Qualification 2023 with the pty.spawn team and managed to solve several challenges. One of the challenges that I solved was the Authy (Web).
+Last week, i participated in BlackHat MEA CTF Qualification 2023 with the pty.spawn team and managed to solve several challenges. One of the challenges that I solved was the Authy (Web). My team qualified for the finals in Riyadh, but sadly, we couldn't go because we didn't have enough money for accommodation and other stuff. They only funded the top 10 teams. :(
 
 <!--more-->
 
@@ -15,7 +15,7 @@ Last week, i participated in BlackHat MEA CTF Qualification 2023 with the pty.sp
 **Attachment:**\
 [Authy.zip](/files/Authy.zip)
 
-**Analysis:**
+**Analysis:**\
 After conducting a brief analysis of several files, the application flow is as follows:
 1. File Server.go: There are two endpoints, namely "/login" and "/registration," with the POST method.
 2. File Models.go: The Users data model consists of Username, Firstname, Lastname, Password, Token, and DateCreated.
@@ -80,4 +80,3 @@ Thank you for reading this article, i hope it was helpful :-D\
 [Github]: https://github.com/banuaa
 [Youtube]: https://www.youtube.com/@muhammad.iwn-banua
 [Instagram]: https://www.instagram.com/muhammad.iwn
-
