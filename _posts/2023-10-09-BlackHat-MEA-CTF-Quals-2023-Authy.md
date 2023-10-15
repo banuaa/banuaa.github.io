@@ -9,7 +9,7 @@ Last week, i participated in BlackHat MEA CTF Qualification 2023 with the pty.sp
 <!--more-->
 
 **Challenge Description:**\
-`I have just learned Golang and trying to build a small authentication platform with it. It's a simple API so it should be secure right ?`
+`I have just learned Golang and trying to build a small authentication platform with it. It's a simple API so it should be secure right ?`\
 `Author: SAFCSP`
 
 **Attachment:**\
