@@ -577,7 +577,7 @@ Generate the serialized cookie, and set to website's cookie **cookie=TzoxNzoiR2F
 `Author: Dimas`
 
 **Analysis:**\
-Latex is vulnerable to injection, but there's a blacklist of LaTeX commands like the ones below. Here, you can bypass it using \newtoks, which is used for token register. Then, you simply assign a value to that registered token. I have worked on this Latex problem before on the Hackthebox machine Topology and the UMDCTF 2023 Homework challenge.\
+Latex is vulnerable to injection, but there's a blacklist of LaTeX commands like the ones below. Here, you can bypass it using \newtoks, which is used for token register. Then, you simply assign a value to that registered token. I have worked on this Latex problem before on the Hackthebox machine Topology and the UMDCTF 2023 Homework challenge. By the way, I forgot where I got this payload from, and I saved it for future needs. Respect to whoever created this payload before.\
 **Main.go - Blacklisted Command:**
 ``` go
 var (
