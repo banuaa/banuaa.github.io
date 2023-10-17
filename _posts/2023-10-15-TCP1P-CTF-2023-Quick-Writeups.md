@@ -434,7 +434,7 @@ Given the source code, it's observed that the 'index.php' file calls the 'unseri
 2. File 'Adders.php': there's a '__construct($x)' function that returns 'get_x()'.\
 3. File 'Echoers.php': there's a '__destruct()' function with 'echo get_x()' inside it.
 
-We can utilize these three gadgets to achieve Remote Code Execution (RCE). The 'Vuln' Gadget is wrapped by the 'Adders' Gadget, which, in turn, is wrapped by the 'Echoers' Gadget to trigger the '__toString()' 'eval' function in the 'Vuln' Gadget.
+We can utilize these three gadgets to achieve Remote Code Execution (RCE). The 'Vuln' Gadget is wrapped by the 'Adders' Gadget, which, in turn, is wrapped by the 'Echoers' Gadget to trigger the '__toString()' 'eval' function in the 'Vuln' Gadget.\
 **Index.php:**
 ``` php
 <?php
