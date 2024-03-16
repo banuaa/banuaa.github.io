@@ -1,150 +1,175 @@
-<span class="mobile btn-mobile-menu">
-  <i class="icon icon-list btn-mobile-menu__icon"></i>
-  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
-</span>
+<head prefix="og: http://ogp.me/ns#">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="application-name" content="{{ site.title }}" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="#fff" />
+  <meta name="apple-mobile-web-app-title" content="{{ site.title }}" />
+  <title>
+    {% if page.title %}{{ page.title | escape }} - {{ site.title }}{% else %}{{
+    site.title | escape }}{% endif %}
+  </title>
+  <link
+    rel="alternate"
+    href="{{
+      page.url | remove: 'index.html' | remove: '.html' | absolute_url
+    }}"
+    hreflang="{{ site.lang }}"
+  />
+  <link
+    rel="canonical"
+    href="{{
+      page.url  | remove: 'index.html' | remove: '.html' | absolute_url
+    }}"
+  />
+  {% if paginator.previous_page %}
+  <link
+    rel="prev"
+    href="{{
+      paginator.previous_page_path
+        | remove: 'index.html'
+        | remove: '.html'
+    }}"
+  />
+  {% endif %} {% if paginator.next_page %}
+  <link
+    rel="next"
+    href="{{
+      paginator.next_page_path
+        | remove: 'index.html'
+        | remove: '.html'
+    }}"
+  />
+  {% endif %}
+  <meta
+    name="description"
+    content="{{
+      page.description
+        | default: site.description
+        | strip_html
+        | normalize_whitespace
+        | truncate: 200
+        | escape
+    }}"
+  />
+  <meta name="referrer" content="no-referrer-when-downgrade" />
+  <meta property="fb:app_id" content="{{ site.fb_appid }}" />
+  <meta
+    property="og:site_name"
+    content="{% if page.title %}{{ page.title | escape }} | {{
+      site.author.name
+    }}{% else %}{{ site.title | escape }}{% endif %}"
+  />
+  <meta
+    property="og:title"
+    content="{% if page.title %}{{ page.title | escape }} | {{
+      site.author.name
+    }}{% else %}{{ site.title | escape }}{% endif %}"
+  />
+  {% if page.location %}
+  <meta property="og:type" content="article" />
+  <meta
+    property="article:publisher"
+    content="https://web.facebook.com/{{ site.author.facebook }}"
+  />
+  {% else %}
+  <meta property="og:type" content="website" />
+  {% endif %}
+  <meta
+    property="og:url"
+    content="{{
+      page.url | remove: 'index.html' | remove: '.html' | absolute_url
+    }}"
+  />
+  <meta
+    property="og:description"
+    content="{{
+      page.description
+        | default: site.description
+        | strip_html
+        | normalize_whitespace
+        | truncate: 200
+        | escape
+    }}"
+  />
+  {% if page.image %}
+  <meta property="og:image" content="{{ page.image | absolute_url }}" />
+  {% else %}
+  <meta property="og:image" content="{{ site.image | absolute_url }}" />
+  {% endif %}
+  <meta property="og:image:width" content="640" />
+  <meta property="og:image:height" content="640" />
+  <meta name="twitter:card" content="summary" />
+  <meta
+    name="twitter:title"
+    content="{% if page.title %}{{ page.title | escape }} | {{
+      site.author.twitter
+    }}{% else %}{{ site.title | escape }}{% endif %}"
+  />
+  <meta
+    name="twitter:url"
+    content="{{
+      page.url  | remove: 'index.html' | remove: '.html' | absolute_url
+    }}"
+  />
+  <meta name="twitter:site" content="@{{ site.author.twitter }}" />
+  <meta name="twitter:creator" content="@{{ site.author.twitter }}" />
+  <meta
+    name="twitter:description"
+    content="{{
+      page.description
+        | default: site.description
+        | strip_html
+        | normalize_whitespace
+        | truncate: 200
+        | escape
+    }}"
+  />
+  {% if page.image %}
+  <meta name="twitter:image" content="{{ page.image | absolute_url }}" />
+  {% else %}
+  <meta name="twitter:image" content="{{ site.image | absolute_url }}" />
+  {% endif %} {% feed_meta %}
+  <link
+    rel="apple-touch-icon"
+    sizes="180x180"
+    href="/assets/favicons/apple-touch-icon.png"
+  />
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="32x32"
+    href="/assets/favicons/favicon-32x32.png"
+  />
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="16x16"
+    href="/assets/favicons/favicon-16x16.png"
+  />
+  <link rel="manifest" href="/assets/favicons/site.webmanifest" />
+  <link
+    rel="mask-icon"
+    href="/assets/favicons/safari-pinned-tab.svg"
+    color="#5bbad5"
+  />
+  <meta name="apple-mobile-web-app-title" content="Jekyll Klise" />
+  <meta name="application-name" content="Jekyll Klise" />
+  <meta name="msapplication-TileColor" content="#da532c" />
+  <meta name="theme-color" content="#2c2c2c" />
 
-<header class="panel-cover {% if site.disable_landing_page %}panel-cover--collapsed{% endif %}"
-  style="background-image: url({{ site.baseurl }}/images/cover.jpg)">
-  <div class="panel-main">
+  <link rel="stylesheet" href="/assets/css/style.css" />
 
-    <div class="panel-main__inner panel-inverted">
-      <div class="panel-main__content">
-        <a href="{{ site.baseurl }}/" title="link to home of {{ site.title }}">
-          <img src="{{ site.baseurl }}/images/Muhammad%20Ichwan.jpg" class="user-image" alt="My Profile Photo">
-          <h1 class="panel-cover__title panel-title">{{ site.title }}</h1>
-        </a>
-        <hr class="panel-cover__divider">
-        <p class="panel-cover__description">{{ site.description }}</p>
-        <hr class="panel-cover__divider panel-cover__divider--secondary">
-
-        <div class="navigation-wrapper">
-
-          <!-- About -->
-          <!-- <nav class="cover-navigation cover-navigation--primary">
-            <ul class="navigation">
-              <li class="navigation__item"><a href="{{ site.baseurl }}/about" title="link to about me"
-                  class="blog-button">About</a></li>
-            </ul>
-          </nav> -->
-
-          <!-- Resume -->
-          <!-- <nav class="cover-navigation cover-navigation--primary">
-            <ul class="navigation">
-              <li class="navigation__item"><a href="{{ site.baseurl }}/resume" title="link to my resume"
-                  class="blog-button">Resume</a></li>
-            </ul>
-          </nav> -->
-
-          <!-- Achievements -->
-          <nav class="cover-navigation cover-navigation--primary">
-            <ul class="navigation">
-              <li class="navigation__item"><a href="{{ site.baseurl }}/achievements" title="link to my achievements"
-                  class="blog-button">Achievements</a></li>
-            </ul>
-          </nav>
-          
-          <!-- Professional Certifications -->
-          <nav class="cover-navigation cover-navigation--primary">
-            <ul class="navigation">
-              <li class="navigation__item"><a href="{{ site.baseurl }}/certifications" title="link to my Certifications"
-                  class="blog-button">Certifications</a></li>
-            </ul>
-          </nav>
-
-          <!-- Blog -->
-          <nav class="cover-navigation cover-navigation--primary">
-            <ul class="navigation">
-              <li class="navigation__item"><a href="{{ site.baseurl }}/#blog" title="link to my blog"
-                  class="blog-button">Blog</a></li>
-            </ul>
-          </nav>
-          
-          <nav class="cover-navigation navigation--social">
-            <ul class="navigation">
-
-              {% if site.author.twitter_username %}
-              <!-- Twitter -->
-              <li class="navigation__item">
-                <a href="http://twitter.com/{{ site.author.twitter_username }}"
-                  title="@{{ site.author.twitter_username }} on Twitter" target="_blank">
-                  <i class="icon icon-social-twitter"></i>
-                  <span class="label">Twitter</span>
-                </a>
-              </li>
-              {% endif %}
-
-              {% if site.author.facebook_username %}
-              <!-- Facebook -->
-              <li class="navigation__item">
-                <a href="http://fb.me/{{ site.author.facebook_username }}"
-                  title="{{ site.author.facebook_username }} on Facebook" target="_blank">
-                  <i class="icon icon-social-facebook"></i>
-                  <span class="label">Facebook</span>
-                </a>
-              </li>
-              {% endif %}
-
-              {% if site.author.linkedin_username %}
-              <!-- LinkedIn -->
-              <li class="navigation__item">
-                <a href="https://www.linkedin.com/in/{{ site.author.linkedin_username }}"
-                  title="{{ site.author.linkedin_username }} on LinkedIn" target="_blank">
-                  <i class="icon icon-social-linkedin"></i>
-                  <span class="label">LinkedIn</span>
-                </a>
-              </li>
-              {% endif %}
-
-              {% if site.author.github_username %}
-              <!-- GitHub -->
-              <li class="navigation__item">
-                <a href="https://www.github.com/{{ site.author.github_username }}"
-                  title="{{ site.author.github_username }} on GitHub" target="_blank">
-                  <i class="icon icon-social-github"></i>
-                  <span class="label">GitHub</span>
-                </a>
-              </li>
-              {% endif %}
-
-              {% if site.author.medium_username %}
-              <!-- Medium -->
-              <li class="navigation__item">
-                <a href="https://www.medium.com/@{{ site.author.medium_username }}"
-                  title="{{ site.author.medium_username }} on Medium" target="_blank">
-                  <i class="icon icon-social-medium"></i>
-                  <span class="label">Medium</span>
-                </a>
-              </li>
-              {% endif %}
-
-              {% if site.author.email %}
-              <!-- Email -->
-              <li class="navigation__item">
-                <a href="mailto:{{ site.author.email }}" title="Email {{ site.author.email }}" target="_blank">
-                  <i class="icon icon-mail"></i>
-                  <span class="label">Email</span>
-                </a>
-              </li>
-              {% endif %}
-
-              <!-- RSS 
-              <li class="navigation__item">
-                <a href="{{ site.baseurl }}/feed.xml" title="Subscribe" target="_blank">
-                  <i class="icon icon-rss"></i>
-                  <span class="label">RSS</span>
-                </a>
-              </li>
-              -->
-              
-            </ul>
-          </nav>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="panel-cover--overlay"></div>
-  </div>
-</header>
+  <!-- for mathjax support -->
+  {% if page.usemathjax %}
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+      TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  {% endif %}
+    
+</head>

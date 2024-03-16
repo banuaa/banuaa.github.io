@@ -1,8 +1,7 @@
-_site
-.sass-cache
-.jekyll-cache
+_site/
+.sass-cache/
+.jekyll-cache/
 .jekyll-metadata
-*.sublime-project
-*.sublime-workspace
-.DS_Store
+_drafts
+klise-*.gem
 Gemfile.lock

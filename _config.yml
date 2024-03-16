@@ -1,46 +1,90 @@
 # Site settings
-title: Muhammad Ichwan
-description: "👋 Hello, I'm Muhammad Ichwan 💻, this blog is used to write articles related to CTF and what I'm working on, as well as to serve as my portfolio. I hope it's useful ✨"
-url: 'https://banuaa.github.io'
-baseurl: ''
-# google_analytics: 'UA-XXXXXX-X'
-# disqus_shortname: 'your-disqus-name'
-# disable_landing_page: true
+title: Banua Blog # site title
+description:  # site description
+lang: en-US # default lang
+timezone: Asia/Jakarta # set your timezone
+image: assets/img/ogp.png # This image used for Open Graph more info https://ogp.me/
+repo: https://github.com/piharpi/jekyll-klise # site repo [optional]
+mode: dark # default theme "dark" | "light"
 
+# Profile settings
 author:
-  name: 'Muhammad Ichwan'
-  email: michwan184@gmail.com
-  twitter_username: banuaa_
-  facebook_username: muhammad.ichwan.35325
-  github_username:  banuaa
-  linkedin_username:  muhammad-ichwan-banua
-  medium_username: banua
+  name: 👋 Muhammad Ichwan 💻 # author name
+  bio: # tell to the world
+  username: banua # general username
+  github: banuaa # github username
+  twitter: banuaa_ # twitter username
+  facebook: muhammad.ichwan.35325 # facebook username
+  email: michwan184@gmail.com # email adress
+  instagram: muhammad.iwn
+  linkedin: muhammad-ichwan-banua
+  avatar: /assets/img/avatar.jpg # change with your own avatar
 
-defaults:
-  -
-    scope:
-      path: ''
-      type: 'posts'
-    values:
-        layout: 'post'
+# URL settings
+url: "https://banuaa.github.io" #
+baseurl:
+permalink: /:title/
+google_analytics: # leave it blank if not wish
+fb_appid:
 
-# Build settings
-destination: _site
-paginate: 10
-permalink: /:year/:title/
+# Collection setting
+collections:
+  posts:
+    output: true
+
+# Markdown settings
 markdown: kramdown
 highlighter: rouge
-excerpt_separator: <!--more-->
-
-sass:
-    sass_dir: _sass
-    style: compressed
-
 kramdown:
-  # use Github Flavored Markdown
-  input: GFM
-  # do not replace newlines by <br>s
-  hard_wrap: false
+  syntax_highlighter: rouge
 
-plugins: ['jekyll-paginate']
-exclude: ['README.md', 'Gemfile', 'Gemfile.lock', 'screenshot.png']
+# Default front matter
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: post
+      comments: false
+
+# Jekyll Compose default front matter
+jekyll_compose:
+  post_default_front_matter:
+    modified:
+    tags: []
+    description:
+  draft_default_front_matter:
+    modified:
+    tags: []
+    description:
+
+# Homepage limit posts
+number_of_posts: 10
+
+# Build settings
+# theme: klise
+sass:
+  style: compressed
+
+include:
+  - _redirects
+  - .htaccess
+
+exclude:
+  - CNAME
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE
+  - CHANGELOG.md
+  - README.md
+  - node_modules
+  - CODE_OF_CONDUCT.md
+  - CONTRIBUTING.md
+  - lighthouse.png
+  - klise-*.gem
+  - klise.gemspec
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-postfiles

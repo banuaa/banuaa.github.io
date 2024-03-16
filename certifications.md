@@ -1,6 +1,11 @@
 ---
-layout: default
+title: Certifications
+permalink: /certifications/
+layout: page
+excerpt: My Certifications
+comments: false
 ---
+
 ### 🔐 My Professional Certifications 🔐
 
 - **✨Web Application Penetration Tester eXtreme (eWPTXv2), eLearnSecurity**\

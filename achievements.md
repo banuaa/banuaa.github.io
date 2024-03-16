@@ -1,6 +1,11 @@
 ---
-layout: default
+title: Achievements
+permalink: /achievements/
+layout: page
+excerpt: My Achievements
+comments: false
 ---
+
 ### 🔐 My Achievements (Sort by Newest) 🔐
 - **✨Best Writeup UIUCTF International 2023 - Group Project (Cryptography)**\
 Certificate or Evidence: [Here](/images/achievements/UIUCTF_2023_Best_Writeup.png)
