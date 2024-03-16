@@ -14,6 +14,7 @@ Last week, i participated in UIUCTF 2023 with the TCP1P team and managed to solv
 `nc group.chal.uiuc.tf 1337`
 
 **Attachment (chal.py):**
+
 ``` python
 from Crypto.Util.number import getPrime, long_to_bytes
 from random import randint
@@ -63,6 +64,7 @@ if __name__ == "__main__":
 ```
 
 **Analysis:**
+
 ``` python
     .....snip....
     key = hashlib.md5(long_to_bytes(S)).digest()
@@ -73,6 +75,7 @@ if __name__ == "__main__":
     print(f"[$]     {c = }")
     ....snip....
 ```
+
 It is known that the key is the MD5 hash of the **“S”**, which is then returned in a byte format. This key is used to encrypt the flag using AES ECB mode.
 
 To decrypt the AES ECB mode, this key is required.
@@ -107,6 +110,7 @@ In the given code, after computing **Ak = pow(A, k, p)**, **“Ak”** will beco
 Since the shared secret **“S”** is always equal to **1 (mod p)** when **“k”** is the totient of **“p”**, the derived encryption key **“key”** will be the **MD5** hash of the same value every time. This results in a **predictable encryption key**.
 
 **Solver:**
+
 ``` python
 from Crypto.Util.number import *
 from Crypto.Cipher import AES
@@ -149,7 +153,7 @@ print(f"[+] Flag = {flag}")
 
 We got the flag!
 
-![Flag](/images/post/UIUCTF2023_flag.png)
+![Flag](images/UIUCTF2023_flag.png)
 
 Thank you for reading this article, i hope it was helpful :-D\
 **Follow me on: [Linkedin], [Medium], [Github], [Youtube], [Instagram]**

@@ -10,7 +10,8 @@ tag:
 Last week, i participated in BlackHat MEA CTF Qualification 2023 with the pty.spawn team and managed to solve several challenges. One of the challenges that I solved was the Authy (Web). My team qualified for the finals in Riyadh, but sadly, we couldn't go because we didn't have enough money for accommodation and other stuff. They only funded the top 10 teams. :(
 
 **Challenge Description:**\
-`I have just learned Golang and trying to build a small authentication platform with it. It's a simple API so it should be secure right ?`\
+`I have just learned Golang and trying to build a small authentication platform with it.`
+`It's a simple API so it should be secure right ?`\
 `Author: SAFCSP`
 
 **Attachment:**\
@@ -66,7 +67,7 @@ func main() {
 }
 ```
 
-![Debugging](/images/post/BlackHat-MEA-CTF-Quals-2023_Authy1.png)
+![Debugging](images/BlackHat-MEA-CTF-Quals-2023_Authy1.png)
 
 1. The Latin "é" requires 2 bytes in UTF-8, so if you call len("é"), the output will be 2 characters.
 2. Register with these Latin characters three times, and the login process will read it as 6 characters.
@@ -74,7 +75,7 @@ func main() {
 
 Run the payload, and the flag is obtained! I ran it locally because I can't start an instance again after submitting the flag.
 
-![Flag](/images/post/BlackHat-MEA-CTF-Quals-2023_Authy2.png)
+![Flag](images/BlackHat-MEA-CTF-Quals-2023_Authy2.png)
 
 **Real Flag**: BHFlagY{f6666525f4fa1f0e32c7dc9c8d987d82}
 

