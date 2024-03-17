@@ -19,7 +19,7 @@ Last week, i participated in CSAW CTF 2023 with the Kernel Escape team and manag
 
 **Overview:**
 
-![Overview](images/CSAWCTF2023_overview.png)
+![Overview](/assets/img/CSAW-CTF-2023-Impossibrawler/images/CSAWCTF2023_overview.png)
 
 I'm trying to see what this game is like first. It's known to be a shooting game where there are enemies and two stages. Our goal in this game is to kill all the enemies. If all the enemies are killed, then it will advance to stage 2, and will get a flag if all the enemies also die in that stage.
 
@@ -37,7 +37,7 @@ So, how i can decompile PCK file? Based on this article [here]("https://mahaloz.
 
 Okay, lets decompile the PCK file first.
 
-![Decompile](images/CSAWCTF2023_decompile.png)
+![Decompile](/assets/img/CSAW-CTF-2023-Impossibrawler/images/CSAWCTF2023_decompile.png)
 
 Steps to Decompile:
 1. Open Godot RE Tools ([gdsdecomp]("https://github.com/bruvzg/gdsdecomp"))
@@ -50,18 +50,18 @@ Steps to Decompile:
 
 Here is the output after decompiling the PCK file:
 
-![Decompile Output](images/CSAWCTF2023_output_decompile.png)
+![Decompile Output](/assets/img/CSAW-CTF-2023-Impossibrawler/images/CSAWCTF2023_output_decompile.png)
 
 All the source code are inside the "Scripts" directory:
 
-![Scripts](images/CSAWCTF2023_scripts.png)
+![Scripts](/assets/img/CSAW-CTF-2023-Impossibrawler/images/CSAWCTF2023_scripts.png)
 
 Let's move to the [Godot Engine Editor](https://godotengine.org/download/windows/) to analyze the Source Code within the "Scripts" directory.
 
 **Analysis:**\
 Here is the initial view using the Godot Engine for debugging and analyzing the source code of the PCK file.
 
-![Initial View](images/CSAWCTF2023_godotengineview.png)
+![Initial View](/assets/img/CSAW-CTF-2023-Impossibrawler/images/CSAWCTF2023_godotengineview.png)
 
 For analysis, i am focusing on the "Level_1.gd" and "Level_2.gd" files in the "Scripts" directory because they are related for obtaining the flag.
 
@@ -70,27 +70,27 @@ After reviewing both files, i am focused on its "if condition".
 **Level_1.gd**\
 There is a condition that checks if the remaining enemies are equal to "0". If so, it will initiate a seeding process and generate a random number before transitioning to scene 2.
 
-![Level_1.gd](images/CSAWCTF2023_level1.png)
+![Level_1.gd](/assets/img/CSAW-CTF-2023-Impossibrawler/images/CSAWCTF2023_level1.png)
 
 **Level_2.gd**\
 Same as Level_1.gd, there is a condition that checks if the remaining enemies are equal to "0". The different is, this is final stage. Where the enemies left are "0", we will obtain the flag.
 
-![Level_2.gd](images/CSAWCTF2023_level2.png)
+![Level_2.gd](/assets/img/CSAW-CTF-2023-Impossibrawler/images/CSAWCTF2023_level2.png)
 
 **Solver:**\
 Since the if condition in both files only checks if the remaining enemies are equal to "0", we can modify it to check for not equal to "0". Therefore, when the game is played, as long as there are remaining enemies greater than "0", it will proceed to stage 2. The same applies to stage 2, and it will immediately display the flag.\
 
 **Level_1.gd modified:**\
 
-![Level_1.gd modify](images/CSAWCTF2023_level1_modify.png)\
+![Level_1.gd modify](/assets/img/CSAW-CTF-2023-Impossibrawler/images/CSAWCTF2023_level1_modify.png)\
 
 **Level_2.gd modified:**\
 
-![Level_2.gd modify](images/CSAWCTF2023_level2_modify.png)\
+![Level_2.gd modify](/assets/img/CSAW-CTF-2023-Impossibrawler/images/CSAWCTF2023_level2_modify.png)\
 
 Save, Play the Project, and We got the Flag!
 
-![Flag](images/CSAWCTF2023_flag.png)
+![Flag](/assets/img/CSAW-CTF-2023-Impossibrawler/images/CSAWCTF2023_flag.png)
 
 **FLAG: csawctf{302e323032323732}**
 

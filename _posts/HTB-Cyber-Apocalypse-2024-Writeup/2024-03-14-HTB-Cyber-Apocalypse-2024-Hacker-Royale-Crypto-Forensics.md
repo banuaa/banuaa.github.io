@@ -377,7 +377,7 @@ document.write(unescape('%3c%68%74%6d%6c%3e%0d%0a%3c%68%65%61%64%3e%0d%0a%3c%74%
 
 Unescape javascript tersebut dan flag didapatkan:
 
-![Urgent](images/HTBAPOCALYPSE2024_urgent1.png)
+![Urgent](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_urgent1.png)
 
 **Flag**: HTB{4n0th3r_d4y_4n0th3r_ph1shi1ng_4tt3mpT}
 

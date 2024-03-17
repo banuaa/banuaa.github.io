@@ -17,7 +17,7 @@ tag:
 **Solving Scenario:**\
 Service meminta inputan jawaban berupa "STOP, DROP, ROLL". Apabila server mengirimkan "GORGE, FIRE, PHREAK", maka jawabannya adalah "STOP-ROLL-DROP", begitu juga apabila hanya terdapat 1 atau 2 kata seperti "GORGE, FIRE", maka jawabannyay adalah "STOP-ROLL". Lakukan secara terus menerus hingga mendapatkan flag.
 
-![Stop Drop and Roll](images/HTBAPOCALYPSE2024_stopdropandroll1.png)
+![Stop Drop and Roll](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_stopdropandroll1.png)
 
 Solver:
 ``` python
@@ -74,7 +74,7 @@ p.close()
 **Solving Scenario:**\
 Hanya menginputkan index karakter flag yang ingin diambil.
 
-![Character](images/HTBAPOCALYPSE2024_character1.png)
+![Character](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_character1.png)
 
 Lakukan automasi agar lebih cepat dan karena flag nya panjang.
 
@@ -146,8 +146,8 @@ __import__("os").system("/bin/bash")
 Decompile binary stash dengan IDA, terdapat variable gear. Akses variable gear tersebut diarahkan ke segment data kumpulan kalimat.
 Gunakan fungsi search text pada IDA untuk mencari flag dengan format "HTB".
 
-![Stash](images/HTBAPOCALYPSE2024_stash1.png)
-![Stash](images/HTBAPOCALYPSE2024_stash2.png)
+![Stash](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_stash1.png)
+![Stash](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_stash2.png)
 
 **Flag**: HTB{n33dl3_1n_a_l00t_stack}
 
@@ -158,7 +158,7 @@ Gunakan fungsi search text pada IDA untuk mencari flag dengan format "HTB".
 **Solving Scenario:**\
 Cukup jalankan ltrace ./cutter dan flag didapatkan
 
-![BoxCutter](images/HTBAPOCALYPSE2024_cutter1.png)
+![BoxCutter](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_cutter1.png)
 
 **Flag** HTB{tr4c1ng_th3_c4ll5}
 
@@ -169,14 +169,14 @@ Cukup jalankan ltrace ./cutter dan flag didapatkan
 **Solving Scenario:**\
 Check file dengan strings, diketahui binary di compress dengan UPX sehingga tidak bisa di decompile.
 
-![PackedAway](images/HTBAPOCALYPSE2024_packedaway1.png)
+![PackedAway](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_packedaway1.png)
 
 Decompress binary dengan [UPX](https://github.com/upx/upx).
 Command: upx -d packed
 
 strings and grep "HTB" pada binary yang telah di decompress maka flag didapatkan.
 
-![PackedAway](images/HTBAPOCALYPSE2024_packedaway2.png)
+![PackedAway](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_packedaway2.png)
 
 **Flag**: HTB{unp4ck3d_th3_s3cr3t_0f_th3_p455w0rd}
 
@@ -187,7 +187,7 @@ strings and grep "HTB" pada binary yang telah di decompress maka flag didapatkan
 **Solving Scenario:**\
 Check Factory.pdf file didalam folder saveDevice/SavedJobs/Inprogress dan flag didapatkan
 
-![Maze](images/HTBAPOCALYPSE2024_maze1.png)
+![Maze](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_maze1.png)
 
 **Flag**: HTB{1n7323571n9_57uff_1n51d3_4_p21n732}
 

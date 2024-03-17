@@ -153,7 +153,7 @@ print(f"[+] Flag = {flag}")
 
 We got the flag!
 
-![Flag](images/UIUCTF2023_flag.png)
+![Flag](/assets/img/UIUCTF-2023-Group-Project/images/UIUCTF2023_flag.png)
 
 Thank you for reading this article, i hope it was helpful :-D\
 **Follow me on: [Linkedin], [Medium], [Github], [Youtube], [Instagram]**

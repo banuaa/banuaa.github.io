@@ -423,16 +423,16 @@ The flag is then obtained through XOR operations using the keys acquired. Since 
 This can be done using the **'jump <address of the printFlag function>'** method in GDB. Before jump to printFlag, you need to set breakpoint on main function with command **'b *main'**.
 
 **Main Function:**
-![Main Function](images/TCP1PCTF2023_SubjectEncallment1.png)
+![Main Function](/assets/img/TCP1P-CTF-2023/images/TCP1PCTF2023_SubjectEncallment1.png)
 
 **Secret Function:**
-![Secret Function](images/TCP1PCTF2023_SubjectEncallment2.png)
+![Secret Function](/assets/img/TCP1P-CTF-2023/images/TCP1PCTF2023_SubjectEncallment2.png)
 
 **printFlag Function:**\
-![printFlag Function](images/TCP1PCTF2023_SubjectEncallment3.png)
+![printFlag Function](/assets/img/TCP1P-CTF-2023/images/TCP1PCTF2023_SubjectEncallment3.png)
 
 **Solver:**
-![Flag](images/TCP1PCTF2023_SubjectEncallment4.png)
+![Flag](/assets/img/TCP1P-CTF-2023/images/TCP1PCTF2023_SubjectEncallment4.png)
 
 **Flag:** TCP1P{here_my_number_so_call_me_maybe}
 
@@ -603,7 +603,7 @@ echo var_dump($serialize);
 
 Generate the serialized cookie, and set to website's cookie **cookie=TzoxNzoiR2FkZ2V0VHdvXEVjaG9...**, refresh page and got RCE!.
 
-![Flag](images/TCP1PCTF2023_UnSecure1.png)
+![Flag](/assets/img/TCP1P-CTF-2023/images/TCP1PCTF2023_UnSecure1.png)
 
 **Flag:** TCP1P{unserialize in php go brrrrrrrr ouch}
 
@@ -668,7 +668,7 @@ CMD ["pnpm", "run", "dev", "--host", "0.0.0.0"]
 ```
 **Solver:**
 
-![Flag](images/TCP1PCTF2023_ASimpleWebsite1.png)
+![Flag](/assets/img/TCP1P-CTF-2023/images/TCP1PCTF2023_ASimpleWebsite1.png)
 
 **Flag:** TCP1P{OuTD4t3d_NuxxT_fR4m3w0RkK}
 
@@ -681,12 +681,12 @@ CMD ["pnpm", "run", "dev", "--host", "0.0.0.0"]
 **Analysis:**\
 Given a file of an NTFS DOS/MBR boot sector, simply extract it using 7z to reveal its contents. After extracting, you'll find files named flag[0-9].txt, as well as files named flag[0-9].txt:flag[0-9]. Examine the file flag01.txt; it contains hexadecimal data, and after decoding, it appears to be a file signature from a PNG file. Since this is likely a split PNG file, the next step is to combine all the hex data and convert it into a PNG.\
 
-![Flag Split](images/TCP1PCTF2023_hideandsplit1.png)
+![Flag Split](/assets/img/TCP1P-CTF-2023/images/TCP1PCTF2023_hideandsplit1.png)
 
 **Solver:**\
 Simply read the flag[0-9].txt:flag[0-9] file and convert to png with command **'cat *:flag* | xxd -r -p > flag.png'**.
 
-![Flag](images/TCP1PCTF2023_hideandsplit2.png)
+![Flag](/assets/img/TCP1P-CTF-2023/images/TCP1PCTF2023_hideandsplit2.png)
 
 **Flag:** TCP1P{hidden_flag_in_the_extended_attributes_fea73c5920aa8f1c}
 
@@ -746,8 +746,8 @@ int vuln()
 ```
 
 **Solver:**
-![Random Number](images/TCP1PCTF2023_GuessMyNumber1.png)
-![flag](images/TCP1PCTF2023_GuessMyNumber2.png)
+![Random Number](/assets/img/TCP1P-CTF-2023/images/TCP1PCTF2023_GuessMyNumber1.png)
+![flag](/assets/img/TCP1P-CTF-2023/images/TCP1PCTF2023_GuessMyNumber2.png)
 
 **Flag:**: TCP1P{r4nd0m_1s_n0t_th4t_r4nd0m_r19ht?_946f38f6ee18476e7a0bff1c1ed4b23b}
 

@@ -67,7 +67,7 @@ func main() {
 }
 ```
 
-![Debugging](images/BlackHat-MEA-CTF-Quals-2023_Authy1.png)
+![Debugging](/assets/img/Blackhat-MEA-CTF-Quals-2023-Authy/images/BlackHat-MEA-CTF-Quals-2023_Authy1.png)
 
 1. The Latin "é" requires 2 bytes in UTF-8, so if you call len("é"), the output will be 2 characters.
 2. Register with these Latin characters three times, and the login process will read it as 6 characters.
@@ -75,7 +75,7 @@ func main() {
 
 Run the payload, and the flag is obtained! I ran it locally because I can't start an instance again after submitting the flag.
 
-![Flag](images/BlackHat-MEA-CTF-Quals-2023_Authy2.png)
+![Flag](/assets/img/Blackhat-MEA-CTF-Quals-2023-Authy/images/BlackHat-MEA-CTF-Quals-2023_Authy2.png)
 
 **Real Flag**: BHFlagY{f6666525f4fa1f0e32c7dc9c8d987d82}
 
