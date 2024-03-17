@@ -190,3 +190,12 @@ Check Factory.pdf file didalam folder saveDevice/SavedJobs/Inprogress dan flag d
 ![Maze](images/HTBAPOCALYPSE2024_maze1.png)
 
 **Flag**: HTB{1n7323571n9_57uff_1n51d3_4_p21n732}
+
+Thank you for reading this article, i hope it was helpful :-D\
+**Follow me on: [Linkedin], [Medium], [Github], [Youtube], [Instagram]**
+
+[Linkedin]: https://www.linkedin.com/in/muhammad-ichwan-banua/
+[Medium]: https://banua.medium.com
+[Github]: https://github.com/banuaa
+[Youtube]: https://www.youtube.com/@muhammad.iwn-banua
+[Instagram]: https://www.instagram.com/muhammad.iwn
