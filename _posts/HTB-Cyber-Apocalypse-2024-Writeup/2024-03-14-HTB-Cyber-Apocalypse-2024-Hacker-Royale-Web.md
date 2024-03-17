@@ -3,6 +3,7 @@ layout: post
 title:  "HTB Cyber Apocalypse 2024: Hacker Royale - Web"
 date:   2024-03-14 00:00:00
 description: "HTB Cyber Apocalypse 2024: Hacker Royale - Web"
+images: /assets/img/HTB-Cyber-Apocalypse-2024/images/CyberApocalypse.jpg
 tag:
   - Web
 ---
