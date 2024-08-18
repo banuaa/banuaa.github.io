@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "UIUCTF 2023 - Group Project [Cryptography]"
-date:   2023-10-09 00:00:00
+title: "UIUCTF 2023 - Group Project [Cryptography]"
+date: 2023-10-09 00:00:00
 description: "UIUCTF 2023 - Group Project [Cryptography] Writeup"
 tag:
   - Cryptography
@@ -15,7 +15,7 @@ Last week, i participated in UIUCTF 2023 with the TCP1P team and managed to solv
 
 **Attachment (chal.py):**
 
-``` python
+```python
 from Crypto.Util.number import getPrime, long_to_bytes
 from random import randint
 import hashlib
@@ -65,7 +65,7 @@ if __name__ == "__main__":
 
 **Analysis:**
 
-``` python
+```python
     .....snip....
     key = hashlib.md5(long_to_bytes(S)).digest()
     cipher = AES.new(key, AES.MODE_ECB)
@@ -87,7 +87,7 @@ Because its only checking for the specific weak values, i used the sympy.totient
 
 When we choose the **“k”** to be the totient of **“p”**, a fascinating property arises. The property is that for any positive integer **“a”** and prime number **“p”**, **“a ^ phi(p) = 1 (mod p)”** holds if **“a”** is coprime with **“p”**.
 
-``` python
+```python
     ....snip....
     try:
         k = int(input("[$] Choose k = "))
@@ -111,7 +111,7 @@ Since the shared secret **“S”** is always equal to **1 (mod p)** when **“k
 
 **Solver:**
 
-``` python
+```python
 from Crypto.Util.number import *
 from Crypto.Cipher import AES
 from sympy import *

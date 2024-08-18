@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "TCP1P CTF 2023 - First Step Beyond Nusantara [Quick Writeups]"
-date:   2023-10-09 00:00:00
+title: "TCP1P CTF 2023 - First Step Beyond Nusantara [Quick Writeups]"
+date: 2023-10-09 00:00:00
 description: "TCP1P CTF 2023 - First Step Beyond Nusantara Quick Writeups"
 tag:
   - Web
@@ -20,7 +20,8 @@ Last week, i participated in "TCP1P CTF 2023 - First Step Beyond Nusantara" with
 
 **Analysis:**\
 This assembly code assigns values to the list variable "flag" based on certain conditions.
-``` text
+
+```text
 15            0 LOAD_FAST                0 (flag)
               2 LOAD_CONST               0 (None)
               4 LOAD_CONST               1 (6)
@@ -221,7 +222,7 @@ This assembly code assigns values to the list variable "flag" based on certain c
 
 **Solver:**
 
-``` python
+```python
 flag = [x for x in range(25)]
 # 15           0 LOAD_FAST                0 (flag)
 #               2 LOAD_CONST               0 (None)
@@ -387,7 +388,7 @@ flag[21] = chr(ord(flag[2]) - 10)
 #            292 CALL_METHOD              0
 #            294 COMPARE_OP               3 (!=)
 #            296 EXTENDED_ARG             1
-#            298 POP_JUMP_IF_FALSE      306 
+#            298 POP_JUMP_IF_FALSE      306
 
 # flag[22] != flag[0].lower()
 flag[22] = flag[0].lower()
@@ -417,10 +418,10 @@ Run the solver and got the flag!
 `Author: Kisanak`
 
 **Analysis:**\
-Upon decompiling using IDA Pro, it was found that the code runs the 'secretFunction' function, but there's no call to 'flag' within it. 
-Let's check the other available functions. There's a 'printFlag' function that runs the 'phase1-14' functions. The 'phase1-14' functions are used for key assignments. 
-The flag is then obtained through XOR operations using the keys acquired. Since the 'phase1-14' functions automatically assign the keys, you just need to call 'printFlag'. 
-This can be done using the **'jump <address of the printFlag function>'** method in GDB. Before jump to printFlag, you need to set breakpoint on main function with command **'b *main'**.
+Upon decompiling using IDA Pro, it was found that the code runs the 'secretFunction' function, but there's no call to 'flag' within it.
+Let's check the other available functions. There's a 'printFlag' function that runs the 'phase1-14' functions. The 'phase1-14' functions are used for key assignments.
+The flag is then obtained through XOR operations using the keys acquired. Since the 'phase1-14' functions automatically assign the keys, you just need to call 'printFlag'.
+This can be done using the **'jump <address of the printFlag function>'** method in GDB. Before jump to printFlag, you need to set breakpoint on main function with command **'b \*main'**.
 
 **Main Function:**
 ![Main Function](/assets/img/TCP1P-CTF-2023/images/TCP1PCTF2023_SubjectEncallment1.png)
@@ -448,15 +449,16 @@ This can be done using the **'jump <address of the printFlag function>'** method
 
 **Analysis:**\
 Given the source code, it's observed that the 'index.php' file calls the 'unserialize' function, which is a known point of deserialization vulnerability. Inside the 'src' folder, there are three files with namespaces: 'GadgetOne/Adders.php,' 'GadgetTwo/Echoers.php,' and 'GadgetThree/Vuln.php.'\
-1. File 'Vuln.php': there's a '__toString()' function with 'eval' inside it.\
-2. File 'Adders.php': there's a '__construct($x)' function that returns 'get_x()'.\
-3. File 'Echoers.php': there's a '__destruct()' function with 'echo get_x()' inside it.
 
-We can utilize these three gadgets to achieve Remote Code Execution (RCE). The 'Vuln' Gadget is wrapped by the 'Adders' Gadget, which, in turn, is wrapped by the 'Echoers' Gadget to trigger the '__toString()' 'eval' function in the 'Vuln' Gadget.\
+1. File 'Vuln.php': there's a '\_\_toString()' function with 'eval' inside it.\
+2. File 'Adders.php': there's a '\_\_construct($x)' function that returns 'get_x()'.\
+3. File 'Echoers.php': there's a '\_\_destruct()' function with 'echo get_x()' inside it.
+
+We can utilize these three gadgets to achieve Remote Code Execution (RCE). The 'Vuln' Gadget is wrapped by the 'Adders' Gadget, which, in turn, is wrapped by the 'Echoers' Gadget to trigger the '\_\_toString()' 'eval' function in the 'Vuln' Gadget.\
 
 **Index.php:**
 
-``` php
+```php
 <?php
 require("vendor/autoload.php");
 
@@ -470,7 +472,7 @@ echo "Welcome to my web app!";
 
 **GadgetOne\Adders.php:**
 
-``` php
+```php
 <?php
 
 namespace GadgetOne {
@@ -491,14 +493,14 @@ namespace GadgetOne {
 
 **GadgetTwo\Echoers.php:**
 
-``` php
+```php
 <?php
 
 namespace GadgetTwo {
     class Echoers
     {
         protected $klass;
-        
+
         function __destruct()
         {
             echo $this->klass->get_x();
@@ -509,7 +511,7 @@ namespace GadgetTwo {
 
 **GadgetThree\Vuln.php:**
 
-``` php
+```php
 <?php
 
 namespace GadgetThree {
@@ -538,11 +540,11 @@ namespace GadgetThree {
 
 **Solver:**\
 
-To gain RCE, i modify this Gadget and create exploit. I also added a function '__construct()' to the Gadget Echoers to capture parameters when the class is defined, and then turned it into a variable so that it can be used by functions within the class.\
+To gain RCE, i modify this Gadget and create exploit. I also added a function '\_\_construct()' to the Gadget Echoers to capture parameters when the class is defined, and then turned it into a variable so that it can be used by functions within the class.\
 
 **GadgetTwo\Echoers.php:**
 
-``` php
+```php
 <?php
 
 namespace GadgetTwo {
@@ -554,7 +556,7 @@ namespace GadgetTwo {
         {
             $this->klass = new \GadgetOne\Adders(new \GadgetThree\Vuln());
         }
-        
+
         function __destruct()
         {
             echo $this->klass->get_x();
@@ -565,7 +567,7 @@ namespace GadgetTwo {
 
 **GadgetThree\Vuln.php:**
 
-``` php
+```php
 <?php
 
 namespace GadgetThree {
@@ -620,7 +622,7 @@ Latex is vulnerable to injection, but there's a blacklist of LaTeX commands like
 
 **Main.go - Blacklisted Command:**
 
-``` go
+```go
 var (
 	//go:embed static/*
 	static    embed.FS
@@ -633,7 +635,7 @@ var (
 
 **Solver:**
 
-``` text
+```text
 \documentclass{article}
 \RequirePackage{verbatim}
 \begin{document}
@@ -657,7 +659,8 @@ var (
 
 **Analysis:**\
 In the Dockerfile, it is known that the framework uses Nuxt with version v3.0.0-rc.12, and it runs in developer mode. While browsing Nuxt dev mode, an exploit was found, as documented in this article: https://huntr.dev/bounties/4849af83-450c-435e-bc0b-71705f5be440/. According to the article, Nuxt versions <= rc12 are vulnerable to path traversal. All that's left is to perform path traversal and read the flag.
-``` text
+
+```text
 # Clone the Nuxt.js repository and switch to the desired release
 RUN git clone https://github.com/nuxt/framework.git /app && \
     cd /app && \
@@ -666,6 +669,7 @@ RUN git clone https://github.com/nuxt/framework.git /app && \
 # Start the Nuxt.js development server
 CMD ["pnpm", "run", "dev", "--host", "0.0.0.0"]
 ```
+
 **Solver:**
 
 ![Flag](/assets/img/TCP1P-CTF-2023/images/TCP1PCTF2023_ASimpleWebsite1.png)
@@ -684,7 +688,7 @@ Given a file of an NTFS DOS/MBR boot sector, simply extract it using 7z to revea
 ![Flag Split](/assets/img/TCP1P-CTF-2023/images/TCP1PCTF2023_hideandsplit1.png)
 
 **Solver:**\
-Simply read the flag[0-9].txt:flag[0-9] file and convert to png with command **'cat *:flag* | xxd -r -p > flag.png'**.
+Simply read the flag[0-9].txt:flag[0-9] file and convert to png with command **'cat _:flag_ | xxd -r -p > flag.png'**.
 
 ![Flag](/assets/img/TCP1P-CTF-2023/images/TCP1PCTF2023_hideandsplit2.png)
 
@@ -701,7 +705,7 @@ Because the file is named zip-25000.zip and contains a file named password.txt, 
 
 **Solver:**
 
-``` python
+```python
 import os
 import subprocess
 
@@ -711,7 +715,7 @@ for i in range(25000, 0, -1):
     os.system(f"rm -rf zip-{i}.zip")
 ```
 
-**Flag:** TCP1P{1_TH1NK_U_G00D_4T_SCR1PT1N9_botanbell_1s_h3r3^_^}
+**Flag:** TCP1P{1*TH1NK_U_G00D_4T_SCR1PT1N9_botanbell_1s_h3r3^*^}
 
 ### **Guess My Number - Misc**
 
@@ -724,7 +728,7 @@ for i in range(25000, 0, -1):
 **Analysis:**\
 Decompile the guess file using IDA Pro. It's known that to obtain the flag, our input must match -889275714 after addition and XOR operations. For v1, it's a random number with a given seed. So, you just need to create a program that generates the same number with the same seed, then add 1337331 to it and XOR it with -889275714. The result will be the correct input, and you'll obtain the flag.
 
-``` c
+```c
 int vuln()
 {
   int v1; // [rsp+Ch] [rbp-4h]
@@ -749,7 +753,7 @@ int vuln()
 ![Random Number](/assets/img/TCP1P-CTF-2023/images/TCP1PCTF2023_GuessMyNumber1.png)
 ![flag](/assets/img/TCP1P-CTF-2023/images/TCP1PCTF2023_GuessMyNumber2.png)
 
-**Flag:**: TCP1P{r4nd0m_1s_n0t_th4t_r4nd0m_r19ht?_946f38f6ee18476e7a0bff1c1ed4b23b}
+**Flag:**: TCP1P{r4nd0m_1s_n0t_th4t_r4nd0m_r19ht?\_946f38f6ee18476e7a0bff1c1ed4b23b}
 
 Thank you for reading this article, i hope it was helpful :-D\
 **Follow me on: [Linkedin], [Medium], [Github], [Youtube], [Instagram]**

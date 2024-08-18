@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "HTB Cyber Apocalypse 2024: Hacker Royale - Misc, Reversing and Hardware"
-date:   2024-03-14 00:00:00
+title: "HTB Cyber Apocalypse 2024: Hacker Royale - Misc, Reversing and Hardware"
+date: 2024-03-14 00:00:00
 description: "HTB Cyber Apocalypse 2024: Hacker Royale - Misc, Reversing and Hardware"
 tag:
   - Misc
@@ -15,12 +15,13 @@ tag:
 ### **Stop Drop and Roll - Misc**
 
 **Solving Scenario:**\
-Service meminta inputan jawaban berupa "STOP, DROP, ROLL". Apabila server mengirimkan "GORGE, FIRE, PHREAK", maka jawabannya adalah "STOP-ROLL-DROP", begitu juga apabila hanya terdapat 1 atau 2 kata seperti "GORGE, FIRE", maka jawabannyay adalah "STOP-ROLL". Lakukan secara terus menerus hingga mendapatkan flag.
+The service requires input in the format 'STOP, DROP, ROLL.' If the server sends 'GORGE, FIRE, PHREAK,' the correct response should be 'STOP-ROLL-DROP.' Similarly, if only one or two words are sent, such as 'GORGE, FIRE,' the response should be 'STOP-ROLL.' Continue this process until the flag is obtained.
 
 ![Stop Drop and Roll](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_stopdropandroll1.png)
 
 Solver:
-``` python
+
+```python
 from pwn import *
 
 mapping = {
@@ -38,7 +39,7 @@ p.recvline()
 
 while True:
 	question = p.recvline().decode().replace("\n", "").split(", ")
-	
+
 	if len(question) == 1:
 		answer = mapping[question[0]]
 		p.sendline(answer.encode())
@@ -59,7 +60,7 @@ while True:
 		answer = mapping[question[0]]+"-"+mapping[question[1]]+"-"+mapping[question[2]]+"-"+mapping[question[3]]+"-"+mapping[question[4]]
 		p.sendline(answer.encode())
 		print(answer)
-	
+
 	p.recvuntil(b"What do you do? ")
 
 p.close()
@@ -72,14 +73,15 @@ p.close()
 ### **Character - Misc**
 
 **Solving Scenario:**\
-Hanya menginputkan index karakter flag yang ingin diambil.
+Only the index of the desired flag character needs to be input.
 
 ![Character](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_character1.png)
 
-Lakukan automasi agar lebih cepat dan karena flag nya panjang.
+Automating the process is recommended for faster results, especially given the length of the flag.
 
 Solver:
-``` python
+
+```python
 from pwn import *
 
 p = remote("94.237.49.182", 57581)
@@ -94,7 +96,7 @@ while "}" not in flag:
 	flag += chr(part[-2])
 	index += 1
 	print(flag)
-	
+
 p.close()
 ```
 
@@ -106,18 +108,19 @@ p.close()
 
 **Solving Scenario:**\
 main.py file:
-``` python
+
+```python
 .....SNIP.....
 blacklist = [ ';', '"', 'os', '_', '\\', '/', '`',
               ' ', '-', '!', '[', ']', '*', 'import',
-              'eval', 'banner', 'echo', 'cat', '%', 
+              'eval', 'banner', 'echo', 'cat', '%',
               '&', '>', '<', '+', '1', '2', '3', '4',
-              '5', '6', '7', '8', '9', '0', 'b', 's', 
+              '5', '6', '7', '8', '9', '0', 'b', 's',
               'lower', 'upper', 'system', '}', '{' ]
 
 while True:
   ans = input('Break me, shake me!\n\n$ ').strip()
-  
+
   if any(char in ans for char in blacklist):
     print(f'\n{banner1}\nNaughty naughty..\n')
   else:
@@ -125,13 +128,14 @@ while True:
       eval(ans + '()')
       print('WHAT WAS THAT?!\n')
     except:
-      print(f"\n{banner2}\nI'm UNBREAKABLE!\n") 
+      print(f"\n{banner2}\nI'm UNBREAKABLE!\n")
 ```
 
-Python Sandbox Escape, bypass dengan "exec(input())"
+For Python sandbox escape, bypass using 'exec(input()).'
 
 Solver:
-``` python
+
+```python
 exec(input())
 __import__("os").system("/bin/bash")
 ```
@@ -143,8 +147,7 @@ __import__("os").system("/bin/bash")
 ### **LootStash - Reversing**
 
 **Solving Scenario:**\
-Decompile binary stash dengan IDA, terdapat variable gear. Akses variable gear tersebut diarahkan ke segment data kumpulan kalimat.
-Gunakan fungsi search text pada IDA untuk mencari flag dengan format "HTB".
+The binary stash can be decompiled with IDA, revealing a variable named 'gear.' This variable points to a data segment containing a collection of sentences. The 'search text' function in IDA can be used to locate the flag, formatted as 'HTB.'
 
 ![Stash](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_stash1.png)
 ![Stash](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_stash2.png)
@@ -156,7 +159,7 @@ Gunakan fungsi search text pada IDA untuk mencari flag dengan format "HTB".
 ### **BoxCutter - Reversing**
 
 **Solving Scenario:**\
-Cukup jalankan ltrace ./cutter dan flag didapatkan
+Running 'ltrace ./cutter' will result in the flag being displayed.
 
 ![BoxCutter](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_cutter1.png)
 
@@ -167,14 +170,14 @@ Cukup jalankan ltrace ./cutter dan flag didapatkan
 ### **PackedAway - Reversing**
 
 **Solving Scenario:**\
-Check file dengan strings, diketahui binary di compress dengan UPX sehingga tidak bisa di decompile.
+Check the file using 'strings', and it is identified that the binary is compressed with UPX, preventing decompilation.
 
 ![PackedAway](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_packedaway1.png)
 
-Decompress binary dengan [UPX](https://github.com/upx/upx).
+Decompress the binary using [UPX](https://github.com/upx/upx).
 Command: upx -d packed
 
-strings and grep "HTB" pada binary yang telah di decompress maka flag didapatkan.
+Run strings and grep "HTB" on the decompressed binary to obtain the flag.
 
 ![PackedAway](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_packedaway2.png)
 
@@ -185,7 +188,7 @@ strings and grep "HTB" pada binary yang telah di decompress maka flag didapatkan
 ### **Maze - Hardware**
 
 **Solving Scenario:**\
-Check Factory.pdf file didalam folder saveDevice/SavedJobs/Inprogress dan flag didapatkan
+Check the Factory.pdf file located in the folder saveDevice/SavedJobs/Inprogress to retrieve the flag.
 
 ![Maze](/assets/img/HTB-Cyber-Apocalypse-2024/images/HTBAPOCALYPSE2024_maze1.png)
 

