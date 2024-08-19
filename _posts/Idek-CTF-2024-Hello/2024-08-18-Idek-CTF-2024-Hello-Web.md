@@ -164,3 +164,12 @@ Simply send the final payload to the Admin Bot, and the Bot will trigger the pay
 ![Webhook](/assets/img/Idek-CTF-2024-Hello/flag.png)
 
 **Flag:** idek{Ghazy_N3gm_Elbalad}
+
+Thank you for reading this article, i hope it was helpful :-D\
+**Follow me on: [Linkedin], [Medium], [Github], [Youtube], [Instagram]**
+
+[Linkedin]: https://www.linkedin.com/in/muhammad-ichwan-banua/
+[Medium]: https://banua.medium.com
+[Github]: https://github.com/banuaa
+[Youtube]: https://www.youtube.com/@muhammad.iwn-banua
+[Instagram]: https://www.instagram.com/muhammad.iwn
