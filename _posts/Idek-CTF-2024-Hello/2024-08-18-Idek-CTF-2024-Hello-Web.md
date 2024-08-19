@@ -7,7 +7,7 @@ tag:
   - Web
 ---
 
-Setelah sekian lama tidak update article, kali ini saya akan update mengenai writeup Web Idek CTF 2024 dengan nama challenge "Hello". Saya bikin article ini karena dirasa cukup menarik bagi saya.
+After a long hiatus from updating articles, this time an update will cover the writeup for the Web Idek CTF 2024 challenge called 'Hello'. This article is being written because it is considered particularly interesting.
 
 **Challenge Description:**\
 `Just to warm you up for the next Fight :"D`
@@ -18,7 +18,7 @@ Setelah sekian lama tidak update article, kali ini saya akan update mengenai wri
 ![Attachments](https://idekctf-challenges.storage.googleapis.com/uploads/f64f1dd16fae27e943a8f7dab349e00509f39c63bb2278328ac5783d867fa393/idek-hello.tar.gz)
 
 **Analysis:**\
-Karena challenges ini merupakan Whitebox yang diberikan source code, kita harus lakukan source code review terlebih dahulu. Adapun struktur file source code yang diberikan sebagai berikut:
+Since this challenge is a Whitebox challenge with the provided source code, a source code review must be conducted first. The structure of the provided source code files is as follows:
 
 .
 ├── bot.js
@@ -34,8 +34,9 @@ Karena challenges ini merupakan Whitebox yang diberikan source code, kita harus 
 
 3 directories, 8 files
 
-Berdasarkan structure file tersebut, terdapat bot.js yang artinya kemungkinan tipikal challenge Client-Side.
-Analisa pertama kita lakukan pada file bot.js:
+Based on the file structure, there is a bot.js file, which likely indicates a typical client-side challenge.
+
+**First Analysis on the bot.js:**
 
 ```javascript
 ...SNIP...
@@ -72,11 +73,11 @@ const visit = async () => {
 ...SNIP...
 ```
 
-Berdasarkan file bot.js tersebut, FLAG berada di cookies bot yang diskenariokan disini sebagai Admin. Dari FLAG yang berada di Cookie tersebut dapat dipastikan ini adalah challenges Cross-site-Scripting (XSS). Tapi perlu di note terlebih dahulu bahwa terdapat attribute cookie berupa "httponly" yang di set menjadi "true". Artinya, terdapat proteksi sehingga kita tidak bisa melakukan stealing cookies menggunakan javascript document.cookie.
+According to the bot.js file, the FLAG is located in the bot’s cookies, which are simulated as Admin user. Given that the FLAG is stored in a cookie, it can be inferred that this is a Cross-site Scripting (XSS) challenge. However, it is important to note that the cookie has the 'httponly' attribute set to 'true'. This means there is protection in place, preventing the stealing of cookies using JavaScript's document.cookie.
 
-Berdasarkan article dari ![HackCommander](https://hackcommander.github.io/posts/2022/11/12/bypass-httponly-via-php-info-page/), kita bisa melakukan bypass HttpOnly dan exfiltrate cookies via PHP Info page.
+Based on an article from ![HackCommander](https://hackcommander.github.io/posts/2022/11/12/bypass-httponly-via-php-info-page/), it is possible to bypass HttpOnly and exfiltrate cookies via the PHP Info page.
 
-Analisa kedua kita lakukan pada file index.php:
+**Second Analysis on the index.php:**
 
 ```php
 <?php
@@ -95,9 +96,9 @@ if(isset($_GET['name']))
 ?>
 ```
 
-Dari file index.php tersebut, terdapat celah Cross-site-Scripting (XSS) pada parameter "name" yang melakukan render user-input. Tetapi, terdapat filter pada function Enhanced_Trim dimana kita tidak bisa menggunakan karakter "\r", "\n". "\t", "/", dan " " untuk construct payload XSS nya.
+In the index.php file, there is a Cross-site Scripting (XSS) vulnerability in the 'name' parameter, which renders user input. However, there is a filter in the Enhanced_Trim function that prevents the use of characters such as '\r', '\n', '\t', '/', and ' ' (spaces) for constructing the XSS payload.
 
-Analisa ketiga kita lakukan pada file nginx.conf:
+**Third Analysis on the nginx.conf:**
 
 ```bash
 ...SNIP...
@@ -114,7 +115,7 @@ fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
 ...SNIP...
 ```
 
-Dari file configuration nginx tersebut, terdapat celah berupa Unsafe Path Restriction ke endpoint /info.php. Apabila kita tidak melakukan research, mungkin kita berfikir file info.php tersebut bukan menjadi jalan untuk mendapatkan FLAG yang ada di cookies Admin. Tetapi, karena sesuai article dari ![HackCommander](https://hackcommander.github.io/posts/2022/11/12/bypass-httponly-via-php-info-page/) bahwa kita bisa exfiltrate cookies via PHP info page, maka page ini sangat berguna. Diketahui web juga menggunakan PHP-FPM.
+In the Nginx configuration file, there is a vulnerability related to unsafe path restrictions to the /info.php endpoint. Without further research, it might seem that the info.php file is not the way to obtain the FLAG in the Admin’s cookies. However, as outlined in the ![HackCommander](https://hackcommander.github.io/posts/2022/11/12/bypass-httponly-via-php-info-page/) cookies can be exfiltrated via the PHP Info page, making this page highly valuable. It is also noted that the website is using PHP-FPM..
 
 **How to Solve?**\
 Dari hasil analisa yang telah kita lakukan, dapat kita urutkan langkah penyelesaiannya sebagai berikut:
@@ -125,15 +126,16 @@ Dari hasil analisa yang telah kita lakukan, dapat kita urutkan langkah penyelesa
 
 Karena alurnya sudah kita ketahui, langsung saja kita lakukan exploitasi.
 
-Bypass Filter XSS:
+**Bypass Filter XSS:**
 
 1. Bypass " " (spasi) menggunakan null byte %0, referensi dari ![ctftime](https://ctftime.org/writeup/32720)
 2. Bypass "/" (slash) menggunakan String.fromCharCode
 
-Bypass Path Restriction Nginx PHP-FPM:
+**Bypass Path Restriction Nginx PHP-FPM:**
 
 1. Akses ke /info.php yang seharusnya hanya diperbolehkan dari 127.0.0.1 dapat di bypass dengan Path Manipulation => http://target/info.php/index.php ![sumber](https://book.hacktricks.xyz/pentesting-web/proxy-waf-protections-bypass)
 
+**Final Payload:**\
 Dari teknik bypass yang ditemukan, terbentuklah payload XSS untuk stealing cookies dari PHP info page menggunakan regex sebagai berikut:
 
 ```javascript
