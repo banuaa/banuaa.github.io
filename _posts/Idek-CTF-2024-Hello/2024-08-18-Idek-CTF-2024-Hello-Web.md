@@ -12,7 +12,8 @@ After a long hiatus from updating articles, this time an update will cover the w
 **Challenge Description:**\
 `Just to warm you up for the next Fight :"D`
 `Note: the admin bot is not on the same machine as the challenge itself and the`
-`.chal.idek.team:1337 URL should be used for the admin bot URL`\
+`.chal.idek.team:1337 URL should be used for the admin bot URL`
+
 `Author: Abdelhameed Ghazy`
 
 [Chall](http://idek-hello.chal.idek.team:1337/)\
@@ -30,8 +31,7 @@ Since this challenge is a Whitebox challenge with the provided source code, a so
 │   ├── nginx.conf\
 │   └── src\
 │   ├── index.php\
-│   └── info.php\
-└── tes.md
+│   └── info.php
 
 3 directories, 8 files
 
