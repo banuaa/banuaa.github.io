@@ -16,13 +16,10 @@ tag:
 
 # **Link Manager**
 
-`I am very angry that WordPress dropped the support for Link Manager in `
-`version 3.5 release. I created my own plugin to cover that feature and `
-`it is still in the beta phase, can you check if everything's solid?`
-`NOTE: This is a fully white box challenge, almost no heavy brute force `
-`is needed.`\
-`http://100.25.255.51:9097/`\
-[attachment.zip]()
+**Description:**\
+I am very angry that WordPress dropped the support for Link Manager in version 3.5 release. I created my own plugin to cover that feature and it is still in the beta phase, can you check if everything's solid?
+NOTE: This is a fully white box challenge, almost no heavy brute force is needed.
+http://100.25.255.51:9097/
 
 **Analysis:**\
 This challenge involved a custom WordPress plugin. We were provided with the source code and a Docker setup to analyze and debug the vulnerability.
@@ -152,12 +149,10 @@ Run the exploit, and the FLAG was successfully retrieved.
 
 # **Secret Info**
 
-`Our admin accidentally published some secret images on our site. `
-`Unfortunately, somehow we are not able to unpublish the secret image, `
-`however, we tried to apply some protection to our site. This should `
-`be enough, right?`
-`NOTE: This is a fully white box challenge, almost no heavy brute force is needed.`\
-`http://100.25.255.51:9091/`
+**Description:**\
+Our admin accidentally published some secret images on our site. Unfortunately, somehow we are not able to unpublish the secret image. however, we tried to apply some protection to our site. This should be enough, right?
+NOTE: This is a fully white box challenge, almost no heavy brute force is needed.
+http://100.25.255.51:9091/
 
 **Analysis:**\
 This challenge involved a custom WordPress plugin. We were provided with the source code and a Docker setup to analyze and debug the vulnerability.
@@ -225,11 +220,10 @@ Simply access the endpoint for the FLAG image with the filename "flag_secret_not
 
 # **WP Elevator**
 
-`Asked my freelance developer friend to write me an authorization plugin so I can `
-`share knowledge with selected memebers. He is still working on it but gave me an `
-`early version. I don't know how it works but will talk with him once he finishes.`
-`Note: fully whitebox challenge, no need to do massive bruteforce`\
-`http://100.25.255.51:9093/`
+**Description:**\
+Asked my freelance developer friend to write me an authorization plugin so I can share knowledge with selected memebers. He is still working on it but gave me an early version. I don't know how it works but will talk with him once he finishes.
+Note: fully whitebox challenge, no need to do massive bruteforce
+http://100.25.255.51:9093/
 
 **Analysis:**\
 This challenge involved a custom WordPress plugin. We were provided with the source code and a Docker setup to analyze and debug the vulnerability.
@@ -541,12 +535,10 @@ Run the script, and the FLAG is obtained.
 
 # **JustinWonkyTokens**
 
-`Hey, new Wordpress Dev here. I'm developing a simple authentication checker service `
-`that I will later connect it to a REST api. I have downloaded some boilerplate plugin `
-`templates and started working on them. I have a demo plugin already do you want to `
-`check if it works correctly? This is a whitebox challenge, no need to bruteforce `
-`anything (login, endpoint, etc).`\
-`http://100.25.255.51:9094/`
+**Description:**\
+Hey, new Wordpress Dev here. I'm developing a simple authentication checker service that I will later connect it to a REST api. I have downloaded some boilerplate plugin templates and started working on them. I have a demo plugin already do you want to check if it works correctly?
+This is a whitebox challenge, no need to bruteforce anything (login, endpoint, etc).
+http://100.25.255.51:9094/
 
 **Analysis:**\
 This challenge involved a custom WordPress plugin. We were provided with the source code to analyze and debug the vulnerability.
@@ -787,10 +779,10 @@ Run the cookie generator, set it as the simple_jwt cookie, and send a POST reque
 
 # **My Shop Disaster**
 
-`I just installed wordpress to sell my stuff with Woocommerce. I found it a bit boring `
-`so I installed that other plugin to pimp it, I don't think it could cause a security issue?`
-`This is a whitebox challenge, no need to bruteforce anything (login, endpoint, etc).`\
-`http://100.25.255.51:9090/`
+**Description:**\
+I just installed wordpress to sell my stuff with Woocommerce. I found it a bit boring so I installed that other plugin to pimp it, I don't think it could cause a security issue?
+This is a whitebox challenge, no need to bruteforce anything (login, endpoint, etc).
+http://100.25.255.51:9090/
 
 **Analysis:**\
 This challenge involved a custom WordPress plugin. We were provided with the source code and a Docker setup to analyze and debug the vulnerability.
@@ -1033,11 +1025,10 @@ Run the exploit, and the FLAG is obtained.
 
 # **Timberlake**
 
-`I'm a front end designer that has some old backend experience. Wanted to put some `
-`of my skills to make a cool website that can work with templates. Still WIP but it `
-`is coming along nicely.`
-`Note: fully whitebox challenge, no need to do massive bruteforce`\
-`http://100.25.255.51:9095/`
+**Description:**\
+I'm a front end designer that has some old backend experience. Wanted to put some of my skills to make a cool website that can work with templates. Still WIP but it is coming along nicely.
+Note: fully whitebox challenge, no need to do massive bruteforce
+http://100.25.255.51:9095/
 
 **Analysis:**\
 This challenge involved a custom WordPress Theme. We were provided with the source code to analyze and debug the vulnerability.
@@ -1118,8 +1109,8 @@ function validate($filename) {
 From the code, the validate function enforces the following checks:
 
 1. The file extension must not contain .php, .htm, .html, .phtml, .xhtml.
-2. The content of the file must include `/({\{.*?}\}|{\%.*?\%}|{\#.*?\#})/`.
-3. The content of the file must not include `/\b(filter|system|cat|bash|bin|exec|\_self|env|dump|app|sort|tac|file_excerpt|\/bin|FILENAME)\b/i`. This acts as a blacklist.
+2. The content of the file must include $pattern.
+3. The content of the file must not include filter,system,cat,bash,bin,exec,\_self,env,dump,app,sort,tac,file_excerpt,\/bin,FILENAME. This acts as a blacklist.
 4. The file’s location must be in ../../../../../../../../../../../../tmp.
 
 Additionally, there is a save_session function that is accessible publicly (through wp_ajax_nopriv_save_session) at /wp-admin/admin-ajax.php?action=save_session. This function takes the "session_data" parameter via the $\_REQUEST method to set data in the session. $\_REQUEST is a PHP super global variable which contains submitted form data, and all cookie data. In other words, $\_REQUEST is an array containing data from $\_GET, $\_POST, and $\_COOKIE.
@@ -1143,7 +1134,7 @@ We can exploit the save_session function to write an SSTI payload into a PHP ses
 **Steps to Exploit:**\
 From this analysis, the exploitation flow can be summarized as follows:
 
-1. Write an SSTI payload into the PHP session file. Bypass the blacklist using `base64.b64decode("e3tbInN0cmluZ3MgL2ZsYWcudHh0Il18bS5hcCgicGFzc3RocnUiKX19")`. (Read [source](https://blog.sometimenaive.com/2020/04/10/twig3.x-ssti-payloads/)). Note: base64 only for escape this Jekyll Blog Post, you can decode it.
+1. Write an SSTI payload into the PHP session file. Bypass the blacklist using base64.b64decode("e3tbInN0cmluZ3MgL2ZsYWcudHh0Il18bS5hcCgicGFzc3RocnUiKX19"). (Read [source](https://blog.sometimenaive.com/2020/04/10/twig3.x-ssti-payloads/)). Note: base64 only for escape this Jekyll Blog Post, you can decode it.
 2. Render the template by using the PHP session file as the template via a GET request to /?page=sess\_{PHPSESSID}.
 
 **Exploitation:**
@@ -1185,14 +1176,14 @@ Run the exploit, and the FLAG is retrieved.
 **Remediation:**
 
 - Sanitize user input before passing to Twig, use esc_attr or esc_html function
-- Filter `/({\{.*?}\}|{\%.*?\%}|{\#.*?\#})/`
+- Filter character that construct Twig render like `*%}{#`
 
 # **Texting Trouble**
 
-`I just installed a plugin to automate sending SMS to my clients. That's a great `
-`plugin with many options, I don't think it could cause a security issue, right?`
-`This is a whitebox challenge, no need to bruteforce anything (login, endpoint, etc).`\
-`http://100.25.255.51:9092/`
+**Description:**\
+I just installed a plugin to automate sending SMS to my clients. That's a great plugin with many options, I don't think it could cause a security issue, right?
+This is a whitebox challenge, no need to bruteforce anything (login, endpoint, etc).
+http://100.25.255.51:9092/
 
 **Analysis:**\
 This challenge involved a custom WordPress plugin. We were provided with the source code and a Docker setup to analyze and debug the vulnerability.
