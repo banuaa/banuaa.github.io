@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Patchstack WCUS CTF 2024 - Writeup"
-date: 2024-09-15 00:00:00
+date: 2024-09-23 00:00:00
 description: "Patchstack WCUS CTF 2024 - Writeup"
 tag:
   - Web
