@@ -768,8 +768,8 @@ main();
 ?>
 ```
 
-Run the cookie generator, set it as the simple_jwt cookie, and send a POST request to /wp-admin/admin-ajax.php?action=simple_jwt_handler, and the FLAG will be obtained.
-![Flag](/assets/img/Patchstack-WCUS-CTF-2024/JustinWonkyTokens_Flag.png)
+Run the exploit and the FLAG will be obtained.
+![Flag](/assets/img/Patchstack-WCUS-CTF-2024/JustinWonkyTokens_Flag2.png)
 
 **Flag:** CTF{4lg0rithms_4r3_funny_1z268}
 
