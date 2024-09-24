@@ -8,6 +8,8 @@ tag:
   - WordPress
 ---
 
+![Banner](/assets/img/Patchstack-WCUS-CTF-2024/patchstack_wcus-ctf.png)
+
 <h2>Table of Contents</h2>
 - TOC	- TOC
 {:toc}
