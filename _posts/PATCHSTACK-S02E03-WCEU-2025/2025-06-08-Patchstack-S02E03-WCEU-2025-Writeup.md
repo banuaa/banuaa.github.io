@@ -349,7 +349,7 @@ if (isset($_GET['func'])) {
 Okay, try to detect whether SQL Injection is valid or not by entering a Boolean based payload.
 ![Validate SQLi](/assets/img/Patchstack-S02E03-WCEU-2025/WhatIsMagic-validatesqli.png)
 
-It can be seen from the evidence above that the results are valid, meaning that I can dump the flag using boolean based with the data:
+It can be seen from the evidence above that the results are valid, meaning that I can dump the flag using boolean based with the data:\
 • Database: wordpress\
 • Table: wp_options\
 • Column: option_value\
@@ -448,7 +448,7 @@ I've left the decryption key at `/opt/flag.txt`. I know some Patchstack hunters 
   > ⚠ Note: This is a development environment. Some security measures may be temporarily disabled for testing purposes.
 ```
 
-Here are the key points:
+Here are the key points:\
 • The flag is located in /opt/flag and only internal access is allowed\
 • Apache Config RewriteRules redirecting '/html/\*' to '/$1.html'\
 • jFeed integration, the jFeed proxy script is causing some unexpected behavior\
@@ -805,9 +805,11 @@ function ghostly_login_handler(WP_REST_Request $request) {
 …SNIP..
 ```
 
-The login handler's function is vulnerable due to improper validation where it does not validate the password. The validation carried out only checks whether the username and password are not blank and the username is registered, but the username cannot be admin.
+The login handler's function is vulnerable due to improper validation where it does not validate the password. The validation carried out only checks whether the username and password are not blank and the username is registered, but the username cannot be admin.\
+
 The login can be bypassed by filling in a valid username other than the admin, and a random password because it is not validated.
-Then, after successfully logging in, what should I do because I can't create a post? Going back to the Makefile file in the wordpress tool for the first explanation, it is known that there is one post that contains content with a shortcode [ghost_list].
+Then, after successfully logging in, what should I do because I can't create a post? Going back to the Makefile file in the wordpress tool for the first explanation, it is known that there is one post that contains content with a shortcode [ghost_list].\
+
 This means that I can access the /ghost-view page endpoint directly to get the flag after getting the cookie session.
 From the analysis of the source code above, it can be concluded that the flow of the exploit is:
 
