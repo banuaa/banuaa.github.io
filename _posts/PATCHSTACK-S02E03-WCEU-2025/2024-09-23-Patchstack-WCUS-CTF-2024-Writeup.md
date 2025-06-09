@@ -24,10 +24,10 @@ tag:
 
 **Description:**\
 I try to use this old plugin to import stuff to my e-commerce website. I like it, so far.
-This is a whitebox challenge, no need to bruteforce anything (login, endpoint, etc).
+This is a whitebox challenge, no need to bruteforce anything (login, endpoint, etc).\
 http://18.140.17.89:9130
 
-**Source Code Analysis:**\
+**Source Code Analysis: Arbitrary File Upload**\
 Since this is a CTF and given the source code, the first step I did was to check where the flag was stored. It is known that in the Dockerfile, the flag is stored in /flag-REDACTED.txt.
 
 File Dockerfile:
@@ -83,7 +83,7 @@ function register_user(){
 ```
 
 Okay, note that I can register users with subscriber roles, this is useful if other exploits must be authenticated.
-Then I did a folder analysis of the woo-import-export-lite plugin. Here I focus on finding the upload file vulnerability first with the 'wp_handle_upload' grep. As a result, there is an upload file that uses this function and with a false "option test_type =>" which is not secure because it can lead to Arbitrary File Upload, namely in the "includes/classes/class-wpie-product.php" file.
+Then I did a folder analysis of the woo-import-export-lite plugin. Here I focus on finding the upload file vulnerability first with the 'wp_handle_upload' grep. As a result, there is an upload file that uses this function and with a false "option test_type => false" which is not secure because it can lead to Arbitrary File Upload, namely in the "includes/classes/class-wpie-product.php" file.
 
 References:
 [Arbitrary File Upload](https://patchstack.com/academy/wordpress/vulnerabilities/arbitrary-file-upload/#test_type--false)
@@ -221,10 +221,10 @@ Read flag in /flag\*:
 # **What is magic**
 
 **Description:**\
-¯*(ツ)*/¯ it happens. This is a whitebox challenge, no need to brute-force anything (login, endpoint, etc).
+¯*(ツ)*/¯ it happens. This is a whitebox challenge, no need to brute-force anything (login, endpoint, etc).\
 http://18.140.17.89:9170
 
-**Source Code Analysis:**\
+**Source Code Analysis: SQL Injection**\
 Just like before, I checked the location of the flag first. It is known that in the Makefile wordpress toolbox file, the flag is stored in the database in the wp_options table, usually this wordpress table contains option_value columns to store option_name named "lmi".
 
 File Makefile:
@@ -243,7 +243,7 @@ File Makefile:
 ```
 
 Since the flag is stored in the database or wp options, the first possible vulnerability that comes to mind is SQL Injection.
-Analyzing wim.php files, it is known that there are $wpdb->get_results that are vulnerable to SQLinjection. This function will process the location and fallback parameters that can be controlled by the user.
+Analyzing wim.php files, it is known that there are "$wpdb->get_results" that are vulnerable to SQLinjection. This function will process the location and fallback parameters that can be controlled by the user.
 
 File wim.php:
 
@@ -355,8 +355,6 @@ It can be seen from the evidence above that the results are valid, meaning that 
 • Column: option_value
 • Where: option_name=’lmi’
 
-Let’s create the exploit.
-
 **Exploit:**\
 File solver.py:
 
@@ -406,10 +404,10 @@ Run the exploit and the flag is obtained.
 
 **Description:**\
 URGENT: We've intercepted a WordPress development environment from the notorious ransomware group "Orangy". Their decryption key is hidden somewhere in the server, and we need it to help hundreds of affected customers recover their files. Time is critical - can you help us retrieve the key before more systems are compromised?
-This is a gray-box challenge, no need to bruteforce anything (login, endpoint, etc).
+This is a gray-box challenge, no need to bruteforce anything (login, endpoint, etc).\
 http://18.140.17.89:9160
 
-**Source Code Analysis:**\
+**Source Code Analysis: Server-Side Request Forgery & Apache Missconfig**\
 No source code is given, but notes from the developer which contain the following.
 File dev_notes.md:
 
@@ -499,10 +497,10 @@ Just do it right away on this challenge.
 
 **Description:**\
 I made a plugin for the local travel agency that takes their clients on Everest expeditions. They want a cool and secure plugin. Is this alright?
-This is a whitebox challenge, no need to brute-force anything (login, endpoint, etc).
+This is a whitebox challenge, no need to brute-force anything (login, endpoint, etc).\
 http://18.140.17.89:9140
 
-**Source Code Analysis:**\
+**Source Code Analysis: PHP Object Injection (Deserialization)**\
 In the Dockerfile, it is known that the flag is in /flag.txt. It is not yet known if it can be read locally or should be RCE.
 
 File Dockerfile:
@@ -676,10 +674,10 @@ Make a request to the REST API containing the payload and the flag is obtained.
 
 **Description:**\
 Building an app is hard, but we can just base it on WordPress. Nothing can go wrong there, right?
-This is a whitebox challenge, no need to brute-force anything (login, endpoint, etc).
+This is a whitebox challenge, no need to brute-force anything (login, endpoint, etc).\
 http://18.140.17.89:9180
 
-**Source Code Analysis:**\
+**Source Code Analysis: Improper Login Validation**\
 Check the location of the flag first and find the flag in the post. However, it seems that there are custom settings for the post type. It can be seen on the Makefile file in the wordpress toolbox.
 
 File Makefile:
@@ -834,10 +832,10 @@ Access the "http://18.140.17.89:9180/ghost-view/" page with the session cookie o
 
 **Description:**\
 I installed a plugin enabling everybody to post their articles on my blog, that way I won't need to spend time on it, I'm a genius, right?
-This is a whitebox challenge, no need to bruteforce anything (login, endpoint, etc).
+This is a whitebox challenge, no need to bruteforce anything (login, endpoint, etc).\
 http://18.140.17.89:9150
 
-**Source Code Analysis:**\
+**Source Code Analysis: Arbitrary File Read**\
 In the Dockerfile file, it is known that the flag is in /flag.txt.
 
 File Dockerfile:
