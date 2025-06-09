@@ -350,9 +350,9 @@ Okay, try to detect whether SQL Injection is valid or not by entering a Boolean 
 ![Validate SQLi](/assets/img/Patchstack-S02E03-WCEU-2025/WhatIsMagic-validatesqli.png)
 
 It can be seen from the evidence above that the results are valid, meaning that I can dump the flag using boolean based with the data:
-• Database: wordpress
-• Table: wp_options
-• Column: option_value
+• Database: wordpress\
+• Table: wp_options\
+• Column: option_value\
 • Where: option_name=’lmi’
 
 **Exploit:**\
@@ -449,9 +449,9 @@ I've left the decryption key at `/opt/flag.txt`. I know some Patchstack hunters 
 ```
 
 Here are the key points:
-• The flag is located in /opt/flag and only internal access is allowed
-• Apache Config RewriteRules redirecting '/html/\*' to '/$1.html'
-• jFeed integration, the jFeed proxy script is causing some unexpected behavior
+• The flag is located in /opt/flag and only internal access is allowed\
+• Apache Config RewriteRules redirecting '/html/\*' to '/$1.html'\
+• jFeed integration, the jFeed proxy script is causing some unexpected behavior\
 • Classic Editor
 
 From these keypoints, it can be concluded that there is an SSRF vulnerability to read local files, namely the flag located in /opt/flag using jFeed Proxy.
