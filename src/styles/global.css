@@ -1,0 +1,267 @@
+:root {
+	/* Minimal terminal palette */
+	--accent: #00ff9c;
+	--accent-soft: #00c97a;
+
+	/* True dark terminal colors */
+	--bg: #050505;
+	--bg-soft: #0b0b0b;
+	--panel: #101010;
+
+	/* Text colors */
+	--text-primary: 0, 255, 156;
+	--text-secondary: 180, 255, 220;
+	--text-muted: 120, 160, 140;
+	--border: 30, 60, 50;
+
+	/* Subtle terminal glow */
+	--box-shadow:
+		0 0 0 1px rgba(0, 255, 156, 0.08),
+		0 0 20px rgba(0, 255, 156, 0.05);
+}
+
+@font-face {
+	font-family: "Atkinson";
+	src: url("/fonts/atkinson-regular.woff") format("woff");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Atkinson";
+	src: url("/fonts/atkinson-bold.woff") format("woff");
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* GLOBAL BODY */
+body {
+	margin: 0;
+	padding: 0;
+	text-align: left;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+
+	background: var(--bg);
+	color: rgb(var(--text-secondary));
+
+	font-family: "JetBrains Mono", "Fira Code", "Courier New", monospace;
+	font-size: 18px;
+	line-height: 1.7;
+
+	/* Prevent horizontal scroll caused by any overflow child */
+	overflow-x: hidden;
+
+	/* subtle scanline effect */
+	background-image: linear-gradient(
+		rgba(0, 255, 156, 0.03) 1px,
+		transparent 1px
+	);
+	background-size: 100% 3px;
+}
+
+/* MAIN CONTAINER */
+main {
+	width: 720px;
+	max-width: calc(100% - 2em);
+	margin: auto;
+	padding: 3em 1em;
+	box-sizing: border-box;
+}
+
+/* HEADINGS */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 0 0 0.6rem 0;
+	line-height: 1.3;
+	font-weight: 600;
+	color: rgb(var(--text-primary));
+	letter-spacing: 0.5px;
+}
+
+h1 {
+	font-size: 2.6em;
+}
+h2 {
+	font-size: 2em;
+}
+h3 {
+	font-size: 1.6em;
+}
+
+/* TERMINAL STYLE LINKS */
+a {
+	color: var(--accent);
+	text-decoration: none;
+	border-bottom: 1px dotted rgba(0, 255, 156, 0.4);
+	transition: all 0.2s ease;
+}
+
+a:hover {
+	color: #00ffc3;
+	border-bottom: 1px solid #00ffc3;
+	text-shadow: 0 0 6px rgba(0, 255, 156, 0.4);
+}
+
+/* TEXT */
+p {
+	margin-bottom: 1.2em;
+}
+
+.prose p {
+	margin-bottom: 1.8em;
+}
+
+/* IMAGES */
+img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 6px;
+	border: 1px solid rgba(var(--border), 0.6);
+	background: var(--panel);
+	box-sizing: border-box;
+}
+
+/* INLINE CODE */
+code {
+	padding: 3px 6px;
+	background-color: var(--panel);
+	border: 1px solid rgba(var(--border), 0.6);
+	border-radius: 4px;
+	color: var(--accent);
+	font-size: 0.9em;
+}
+
+/* CODE BLOCKS */
+pre {
+	padding: 1.4em;
+	border-radius: 8px;
+	background: #020202;
+	border: 1px solid rgba(0, 255, 156, 0.15);
+	box-shadow: var(--box-shadow);
+
+	/* Key fix: scroll horizontally, never overflow the page */
+	overflow-x: auto;
+	max-width: 100%;
+	white-space: pre;
+	word-break: normal;
+	overflow-wrap: normal; /* overrides body's break-word for code */
+	box-sizing: border-box;
+}
+
+pre > code {
+	all: unset;
+	color: #bfffe6;
+	font-family: "JetBrains Mono", "Fira Code", monospace;
+	font-size: 0.9em;
+	line-height: 1.6;
+}
+
+/* BLOCKQUOTE */
+blockquote {
+	border-left: 3px solid var(--accent);
+	padding: 0 0 0 16px;
+	margin: 1.5em 0;
+	color: rgb(var(--text-muted));
+	font-style: italic;
+}
+
+/* TABLES */
+table {
+	width: 100%;
+	border-collapse: collapse;
+	background: var(--panel);
+	border: 1px solid rgba(var(--border), 0.5);
+
+	/* Prevent table from overflowing on mobile */
+	display: block;
+	overflow-x: auto;
+	box-sizing: border-box;
+}
+
+th,
+td {
+	padding: 10px;
+	border: 1px solid rgba(var(--border), 0.4);
+	white-space: nowrap;
+}
+
+th {
+	color: var(--accent);
+	text-align: left;
+}
+
+/* HR */
+hr {
+	border: none;
+	border-top: 1px solid rgba(0, 255, 156, 0.2);
+	margin: 2em 0;
+}
+
+/* FORM ELEMENTS */
+textarea,
+input {
+	width: 100%;
+	font-size: 16px;
+	background: var(--panel);
+	border: 1px solid rgba(var(--border), 0.6);
+	color: rgb(var(--text-secondary));
+	border-radius: 6px;
+	padding: 8px;
+	box-sizing: border-box;
+}
+
+/* TERMINAL SELECTION COLOR */
+::selection {
+	background: rgba(0, 255, 156, 0.25);
+	color: #ffffff;
+}
+
+/* MOBILE */
+@media (max-width: 720px) {
+	body {
+		font-size: 16px;
+	}
+
+	main {
+		width: 720px;
+		max-width: calc(100% - 2em);
+		padding: 1.5em 1em;
+		box-sizing: border-box;
+	}
+
+	pre {
+		font-size: 0.8em;
+		padding: 1em;
+	}
+
+	h1 {
+		font-size: 2em;
+	}
+	h2 {
+		font-size: 1.6em;
+	}
+	h3 {
+		font-size: 1.3em;
+	}
+}
+
+/* SCREEN READER */
+.sr-only {
+	border: 0;
+	padding: 0;
+	margin: 0;
+	position: absolute !important;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+	clip: rect(1px 1px 1px 1px);
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
+	white-space: nowrap;
+}

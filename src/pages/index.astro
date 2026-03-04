@@ -1,0 +1,95 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+
+const SITE_TITLE = "Muhammad Ichwan | Offensive Security";
+const SITE_DESCRIPTION = "OSCP+, OSCP, CEH Master, eWPTXv2 certified penetration tester specializing in web, mobile, API, and infrastructure security.";
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+
+			<!-- HERO SECTION -->
+			<section>
+				<h2>Hi, I'm Muhammad Ichwan a.k.a Banua👋</h1>
+				<h4>Offensive Security | CTF Player</h4>
+				<p>
+					I am a Cyber Security Professional with 6 years of deep interest in the field, including 
+					3 years of hands-on professional experience focused on penetration testing and red teaming.
+					I am also active play CTF individually or team up every single weekends.
+				</p>
+				<p>
+					I specialize in identifying security weaknesses across web, mobile, API, network, and infrastructure environments — 
+					helping organizations strengthen their security posture through structured and ethical attack simulations.
+				</p>
+			</section>
+
+			<hr />
+
+			<!-- CERTIFICATION HIGHLIGHT -->
+			<section>
+				<h2>Certifications</h2>
+				<ul>
+					<li>OSCP+ – OffSec Certified Professional Plus</li>
+					<li>OSCP – OffSec Certified Professional</li>
+					<li>eWPTXv2 – Web Application Penetration Tester eXtreme</li>
+					<li>CEH Master – Certified Ethical Hacker (Master)</li>
+					<li>CEH – Certified Ethical Hacker</li>
+					<li>CEH Practical – Certified Ethical Hacker (Practical)</li>
+				</ul>
+			</section>
+
+			<hr />
+
+			<!-- WHAT I DO -->
+			<section>
+				<h2>What I Do</h2>
+				<ul>
+					<li>Web, Mobile & API Penetration Testing</li>
+					<li>Network & Infrastructure Security Assessment</li>
+					<li>Red Teaming & Phishing Simulation</li>
+					<li>Source Code Review</li>
+					<li>Vulnerability Reporting (CVSS / OWASP Mapping)</li>
+				</ul>
+			</section>
+
+			<hr />
+
+			<!-- ACHIEVEMENTS -->
+			<section>
+				<h2>Achievements</h2>
+				<ul>
+					<li>🏆 8th Place Patchstack S02E03 WordCamp Europe 2025 - Individual</li>
+					<li>🏆 10th ApoorvCTF International 2025 – Team Hazaza</li>
+					<li>🏆 4th Place Protergo CTF 2024 – Individual (banua)</li>
+					<li>🏆 1st Place Cyber Security PekanIT 2022</li>
+					<li>🎯 Finalist GEMASTIK XV & XIV Cyber Security Division</li>
+					<li>🎯 Finalist Cyber Jawara National 2022</li>
+					<li>🎯 Many More Multiple National CTF Finalist</li>
+				</ul>
+			</section>
+
+			<hr />
+
+			<!-- CONTACT / CTA -->
+			<section>
+				<h2>Let's Connect (Freelance, etc)</h2>
+				<p>
+					📍 Amuntai, South Kalimantan, Indonesia  
+				</p>
+				<p>
+					📧 muhammadichwan.pentester@gmail.com
+				</p>
+			</section>
+
+		</main>
+		<Footer />
+	</body>
+</html>

@@ -1,0 +1,162 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Header from '../../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Blog | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+		<style>
+			main {
+				width: 960px;
+				max-width: calc(100% - 2rem);
+				margin: auto;
+				padding: 2rem 0;
+			}
+
+			.section-title {
+				font-size: 1.8rem;
+				margin-bottom: 2rem;
+				color: rgb(var(--gray-dark));
+				font-weight: 600;
+				letter-spacing: 0.05em;
+			}
+
+			ul {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 2rem;
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+			}
+
+			ul li {
+				width: calc(50% - 1rem);
+			}
+
+			/* Featured post (first item) */
+			ul li:first-child {
+				width: 100%;
+				margin-bottom: 0.5rem;
+			}
+
+			a.post-card {
+				display: block;
+				text-decoration: none;
+				color: inherit;
+				transition: transform 0.15s ease;
+			}
+
+			a.post-card:hover {
+				transform: translateY(-2px);
+			}
+
+			.image-wrapper {
+				width: 100%;
+				aspect-ratio: 2 / 1; /* FORCE SAME RATIO AS 720x360 */
+				overflow: hidden;
+				border-radius: 10px;
+				background: #0b0f0b; /* fits terminal theme */
+				border: 1px solid rgba(120, 255, 120, 0.08);
+			}
+
+			.image-wrapper :global(img) {
+				width: 100%;
+				height: 100%;
+				object-fit: cover; /* prevents stretching */
+				display: block;
+			}
+
+			.title {
+				margin: 0.75rem 0 0.25rem 0;
+				font-size: 1.15rem;
+				line-height: 1.4;
+				color: rgb(var(--gray-dark));
+				font-weight: 600;
+			}
+
+			/* Bigger title for featured post */
+			ul li:first-child .title {
+				font-size: 1.8rem;
+			}
+
+			.date {
+				margin: 0;
+				font-size: 0.9rem;
+				color: rgb(var(--gray));
+				opacity: 0.8;
+			}
+
+			a.post-card:hover .title {
+				color: var(--accent);
+			}
+
+			@media (max-width: 900px) {
+				main {
+					width: 100%;
+				}
+			}
+
+			@media (max-width: 720px) {
+				ul {
+					gap: 1rem;
+				}
+
+				ul li {
+					width: 100%;
+				}
+
+				ul li:first-child .title {
+					font-size: 1.4rem;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1 class="section-title">Blog</h1>
+
+			<section>
+				<ul>
+					{
+						posts.map((post) => (
+							<li>
+								<a class="post-card" href={`/blog/${post.id}/`}>
+									{post.data.heroImage && (
+										<div class="image-wrapper">
+											<Image
+												src={post.data.heroImage}
+												alt={post.data.title}
+												width={720}
+												height={360}
+												quality={90}
+												format="webp"
+											/>
+										</div>
+									)}
+									<h2 class="title">{post.data.title}</h2>
+									<p class="date">
+										<FormattedDate date={post.data.pubDate} />
+									</p>
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>

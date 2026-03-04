@@ -1,0 +1,340 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+
+type Props = CollectionEntry<'blog'>['data'];
+
+const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.props;
+---
+
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} />
+		<style>
+			main {
+				width: 100%;
+				margin: 0;
+			}
+
+			/* === HERO IMAGE === */
+			.hero-image {
+				width: 1200px;
+				max-width: calc(100% - 2rem);
+				margin: 2rem auto 2.5rem auto;
+				box-sizing: border-box;
+			}
+
+			.hero-wrapper {
+				width: 100%;
+				aspect-ratio: 2 / 1;
+				overflow: hidden;
+				border-radius: 12px;
+				background: #0b0f0b;
+				border: 1px solid rgba(120, 255, 120, 0.08);
+			}
+
+			.hero-wrapper :global(img) {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				display: block;
+			}
+
+			/* === MAIN LAYOUT (CONTENT + TOC) === */
+			.content-wrapper {
+				display: grid;
+				grid-template-columns: 1fr 180px;
+				gap: 4rem;
+				width: 1200px;
+				max-width: calc(100% - 2rem);
+				margin: 0 auto;
+				box-sizing: border-box;
+			}
+
+			/* === ARTICLE CONTENT === */
+			.prose {
+				padding: 0 0.5rem 2rem 0.5rem;
+				color: rgb(var(--gray-dark));
+				line-height: 1.8;
+				font-size: 1.05rem;
+				min-width: 0; /* prevent grid blowout */
+				overflow: hidden;
+			}
+
+			/* === TITLE SECTION === */
+			.title {
+				margin-bottom: 1.75rem;
+				padding: 0 0 0.5em 0;
+				text-align: center;
+				line-height: 1.25;
+			}
+
+			.title h1 {
+				margin: 0 0 0.4em 0;
+				font-size: 2.2rem;
+				font-weight: 700;
+				letter-spacing: -0.02em;
+			}
+
+			.date {
+				margin-bottom: 0.5em;
+				color: rgb(var(--gray));
+				font-size: 0.9rem;
+			}
+
+			.last-updated-on {
+				font-style: italic;
+				margin-top: 0.15rem;
+				opacity: 0.8;
+			}
+
+			/* === TAGS === */
+			.tags {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				gap: 0.5rem;
+				margin-top: 0.75rem;
+				margin-bottom: 0.75rem;
+			}
+
+			.tag {
+				font-size: 0.75rem;
+				padding: 0.35rem 0.7rem;
+				border-radius: 6px;
+				text-decoration: none;
+				background: rgba(var(--accent), 0.06);
+				color: rgb(var(--accent));
+				border: 1px solid rgba(var(--accent), 0.15);
+				transition: all 0.15s ease;
+				line-height: 1;
+			}
+
+			.tag:hover {
+				background: rgba(var(--accent), 0.12);
+				transform: translateY(-1px);
+			}
+
+			/* === TABLE OF CONTENTS === */
+			.toc {
+				position: sticky;
+				top: 120px;
+				height: fit-content;
+				font-size: 0.9rem;
+				color: rgb(var(--gray));
+				border-left: 1px solid rgba(120, 255, 120, 0.08);
+				padding-left: 1.25rem;
+			}
+
+			.toc-title {
+				font-weight: 600;
+				font-size: 0.7rem;
+				letter-spacing: 0.14em;
+				text-transform: uppercase;
+				margin-bottom: 1rem;
+				color: rgb(var(--gray-dark));
+				opacity: 0.8;
+			}
+
+			.toc nav {
+				display: flex;
+				flex-direction: column;
+				gap: 0.35rem;
+			}
+
+			.toc a {
+				text-decoration: none;
+				color: rgb(var(--gray));
+				line-height: 1.4;
+				transition: color 0.15s ease, transform 0.15s ease;
+				display: block;
+			}
+
+			.toc a:hover {
+				color: rgb(var(--accent));
+				transform: translateX(2px);
+			}
+
+			.toc a[data-level="3"] {
+				margin-left: 0.9rem;
+				font-size: 0.85rem;
+				opacity: 0.9;
+			}
+
+			.toc a.active {
+				color: rgb(var(--accent));
+				font-weight: 500;
+			}
+
+			/* Better anchor scroll positioning */
+			.prose :global(h2),
+			.prose :global(h3) {
+				scroll-margin-top: 120px;
+			}
+
+			/* === CODE BLOCK MOBILE FIX === */
+			.prose :global(pre) {
+				max-width: 100%;
+				overflow-x: auto;
+				white-space: pre;
+				word-break: normal;
+				overflow-wrap: normal;
+				box-sizing: border-box;
+			}
+
+			/* === IMAGE INSIDE PROSE === */
+			.prose :global(img) {
+				max-width: 100%;
+				height: auto;
+				display: block;
+				box-sizing: border-box;
+			}
+
+			/* === RESPONSIVE === */
+			@media (max-width: 1024px) {
+				.content-wrapper {
+					grid-template-columns: 1fr;
+					gap: 1.5rem;
+					width: 100%;
+					max-width: 100%;
+					padding: 0 1rem;
+					box-sizing: border-box;
+				}
+
+				.toc {
+					display: none;
+				}
+
+				.title h1 {
+					font-size: 1.8rem;
+				}
+
+				.hero-image {
+					width: 100%;
+					max-width: 100%;
+					margin: 1.5rem 0 2rem 0;
+					border-radius: 0;
+				}
+
+				.hero-wrapper {
+					border-radius: 0;
+				}
+
+				.prose {
+					padding: 0 0 2rem 0;
+					font-size: 1rem;
+				}
+			}
+
+			@media (max-width: 480px) {
+				.title h1 {
+					font-size: 1.5rem;
+				}
+
+				.prose :global(pre) {
+					font-size: 0.8em;
+					padding: 1em;
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<Header />
+		<main>
+			<article>
+				<div class="content-wrapper">
+					<div class="prose">
+						<div class="title">
+							<div class="date">
+								<FormattedDate date={pubDate} />
+								{
+									updatedDate && (
+										<div class="last-updated-on">
+											Last updated on <FormattedDate date={updatedDate} />
+										</div>
+									)
+								}
+							</div>
+
+							<h1>{title}</h1>
+
+							{
+								tags && tags.length > 0 && (
+									<div class="tags">
+										{tags.map((tag) => (
+											<a href={`/tags/${tag.toLowerCase()}`} class="tag">
+												#{tag}
+											</a>
+										))}
+									</div>
+								)
+							}
+
+							<hr />
+						</div>
+
+						<slot />
+					</div>
+
+					<aside class="toc">
+						<p class="toc-title">On this page</p>
+						<nav id="toc"></nav>
+					</aside>
+				</div>
+			</article>
+		</main>
+		<Footer />
+
+		<script>
+			const tocContainer = document.getElementById('toc');
+			const headings = document.querySelectorAll('.prose h2, .prose h3');
+
+			if (headings.length && tocContainer) {
+				const links = [];
+
+				headings.forEach((heading) => {
+					if (!heading.id) {
+						heading.id = heading.textContent
+							.toLowerCase()
+							.trim()
+							.replace(/\s+/g, '-')
+							.replace(/[^\w-]/g, '');
+					}
+
+					const link = document.createElement('a');
+					link.href = `#${heading.id}`;
+					link.textContent = heading.textContent;
+					link.dataset.level = heading.tagName === 'H3' ? '3' : '2';
+
+					tocContainer.appendChild(link);
+					links.push(link);
+				});
+
+				const observer = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							const id = entry.target.id;
+							const tocLink = tocContainer.querySelector(`a[href="#${id}"]`);
+
+							if (entry.isIntersecting) {
+								links.forEach((l) => l.classList.remove('active'));
+								if (tocLink) tocLink.classList.add('active');
+							}
+						});
+					},
+					{
+						rootMargin: '-40% 0px -55% 0px',
+						threshold: 0.1,
+					}
+				);
+
+				headings.forEach((heading) => observer.observe(heading));
+			}
+		</script>
+	</body>
+</html>
