@@ -1,23 +1,23 @@
 :root {
-	/* Minimal terminal palette */
-	--accent: #00ff9c;
-	--accent-soft: #00c97a;
+	/* Accent */
+	--accent: #e4572e;
+	--accent-soft: #ff7a59;
 
-	/* True dark terminal colors */
-	--bg: #050505;
-	--bg-soft: #0b0b0b;
-	--panel: #101010;
+	/* Backgrounds */
+	--bg: #0f0f0f;
+	--bg-soft: #1a1a1a;
+	--panel: #141414;
 
-	/* Text colors */
-	--text-primary: 0, 255, 156;
-	--text-secondary: 180, 255, 220;
-	--text-muted: 120, 160, 140;
-	--border: 30, 60, 50;
+	/* Text */
+	--text-primary: 255, 255, 255;
+	--text-secondary: 200, 200, 200;
+	--text-muted: 140, 140, 140;
+	--border: 60, 60, 60;
 
-	/* Subtle terminal glow */
+	/* Shadows */
 	--box-shadow:
-		0 0 0 1px rgba(0, 255, 156, 0.08),
-		0 0 20px rgba(0, 255, 156, 0.05);
+		0 1px 2px rgba(0, 0, 0, 0.4),
+		0 6px 18px rgba(0, 0, 0, 0.3);
 }
 
 @font-face {
@@ -47,18 +47,13 @@ body {
 	color: rgb(var(--text-secondary));
 
 	font-family: "JetBrains Mono", "Fira Code", "Courier New", monospace;
-	font-size: 18px;
+	font-size: 16px;
 	line-height: 1.7;
 
-	/* Prevent horizontal scroll caused by any overflow child */
 	overflow-x: hidden;
 
-	/* subtle scanline effect */
-	background-image: linear-gradient(
-		rgba(0, 255, 156, 0.03) 1px,
-		transparent 1px
-	);
-	background-size: 100% 3px;
+	/* removed terminal scanlines */
+	background-image: none;
 }
 
 /* MAIN CONTAINER */
@@ -79,33 +74,32 @@ h5,
 h6 {
 	margin: 0 0 0.6rem 0;
 	line-height: 1.3;
-	font-weight: 600;
+	font-weight: 700;
 	color: rgb(var(--text-primary));
-	letter-spacing: 0.5px;
+	letter-spacing: -0.5px;
 }
 
 h1 {
-	font-size: 2.6em;
+	font-size: 2.3em;
 }
 h2 {
-	font-size: 2em;
+	font-size: 1.8em;
 }
 h3 {
-	font-size: 1.6em;
+	font-size: 1.4em;
 }
 
-/* TERMINAL STYLE LINKS */
+/* LINKS */
 a {
 	color: var(--accent);
 	text-decoration: none;
-	border-bottom: 1px dotted rgba(0, 255, 156, 0.4);
+	font-weight: 500;
 	transition: all 0.2s ease;
 }
 
 a:hover {
-	color: #00ffc3;
-	border-bottom: 1px solid #00ffc3;
-	text-shadow: 0 0 6px rgba(0, 255, 156, 0.4);
+	color: var(--accent-soft);
+	text-decoration: underline;
 }
 
 /* TEXT */
@@ -130,7 +124,7 @@ img {
 /* INLINE CODE */
 code {
 	padding: 3px 6px;
-	background-color: var(--panel);
+	background-color: var(--bg-soft);
 	border: 1px solid rgba(var(--border), 0.6);
 	border-radius: 4px;
 	color: var(--accent);
@@ -141,22 +135,21 @@ code {
 pre {
 	padding: 1.4em;
 	border-radius: 8px;
-	background: #020202;
-	border: 1px solid rgba(0, 255, 156, 0.15);
+	background: #0a0a0a;
+	border: 1px solid rgba(var(--border), 0.6);
 	box-shadow: var(--box-shadow);
 
-	/* Key fix: scroll horizontally, never overflow the page */
 	overflow-x: auto;
 	max-width: 100%;
 	white-space: pre;
 	word-break: normal;
-	overflow-wrap: normal; /* overrides body's break-word for code */
+	overflow-wrap: normal;
 	box-sizing: border-box;
 }
 
 pre > code {
 	all: unset;
-	color: #bfffe6;
+	color: #f5f5f5;
 	font-family: "JetBrains Mono", "Fira Code", monospace;
 	font-size: 0.9em;
 	line-height: 1.6;
@@ -169,6 +162,7 @@ blockquote {
 	margin: 1.5em 0;
 	color: rgb(var(--text-muted));
 	font-style: italic;
+	background: transparent;
 }
 
 /* TABLES */
@@ -178,7 +172,6 @@ table {
 	background: var(--panel);
 	border: 1px solid rgba(var(--border), 0.5);
 
-	/* Prevent table from overflowing on mobile */
 	display: block;
 	overflow-x: auto;
 	box-sizing: border-box;
@@ -199,7 +192,7 @@ th {
 /* HR */
 hr {
 	border: none;
-	border-top: 1px solid rgba(0, 255, 156, 0.2);
+	border-top: 1px solid rgba(var(--border), 0.5);
 	margin: 2em 0;
 }
 
@@ -216,9 +209,9 @@ input {
 	box-sizing: border-box;
 }
 
-/* TERMINAL SELECTION COLOR */
+/* SELECTION */
 ::selection {
-	background: rgba(0, 255, 156, 0.25);
+	background: var(--accent);
 	color: #ffffff;
 }
 

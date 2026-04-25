@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Under Research Articles
+src/content/blog/SECURE-PHISHING-LAB-WITH-GOPHISH-DOCKER-MAILSERVER-SETUP.md
